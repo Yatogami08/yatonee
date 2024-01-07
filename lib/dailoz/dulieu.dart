@@ -438,6 +438,7 @@ COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
       
       
             COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) as total_doanh_thungay,
+            COALESCE(SUM(CAST(REPLACE(vuot_chuyen, '.', '') AS INTEGER)), 0) as total_vuot_chuyen,
 
  
       COALESCE(AVG(CAST(REPLACE(tilenhanchuyen, '%', '') AS INTEGER)), 0) as average_tilenhanchuyen,

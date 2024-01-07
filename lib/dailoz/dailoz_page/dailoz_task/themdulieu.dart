@@ -95,21 +95,40 @@ class _DailozAddTaskState extends State<themdulieu> {
 
 
     tongDiemsm = caoDiemSang + caoDiemToi + donThuong;
-    if (caDangKiAdmin == '5h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 ) {
+    if (caDangKiAdmin == '5h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 5.0 ) {
       if (tongDiemsm >= 12) {
         thuongVuotMoc = (12 - 8 + 1) * 4000 + (tongDiemsm - 12) * 6000;
       } else {
         thuongVuotMoc = (tongDiemsm - 8 + 1) * 4;
       }
-    } else if (caDangKiAdmin == '8h' || caDangKiAdmin == '10h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
+    }
+    else if (caDangKiAdmin == '8h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 8.0) {
       if (tongDiemsm >= 16) {
         thuongVuotMoc = (16 - 12 + 1) * 4000 + (tongDiemsm - 16) * 6000;
       } else {
         thuongVuotMoc = (tongDiemsm - 12 + 1) * 4000;
       }
-    } else {
+    }
+    else if (caDangKiAdmin == '10h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 10.0) {
+      if (tongDiemsm >= 16) {
+        thuongVuotMoc = (16 - 12 + 1) * 4000 + (tongDiemsm - 16) * 6000;
+      } else {
+        thuongVuotMoc = (tongDiemsm - 12 + 1) * 4000;
+      }
+    }
+
+
+
+
+
+
+    else {
       thuongVuotMoc = 0;
     }
+
+
+
+
 
 
     thuongVuotMoc = thuongVuotMoc < 0 ? 0 : thuongVuotMoc;
@@ -323,7 +342,7 @@ widget.initDataCallback();
             ),
           ),
         ),
-        title:  Text("yatogami0".tr+thunhap.toString(),style: hsSemiBold.copyWith(fontSize: 18),),
+        title:  Text("yatogami0".tr,style: hsSemiBold.copyWith(fontSize: 18),),
       ),
 
 

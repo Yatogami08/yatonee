@@ -715,6 +715,35 @@ class _DailozTaskState extends State<DailozGraphic> {
                   ),
                 ),
                 SizedBox(height: height/36,),
+                SizedBox(
+                  height: height/21,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center, // Đặt giá trị MainAxisAlignment.center ở đây
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: width/36),
+                        height: height/22,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: DailozColor.bgred,
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width/20),
+                            child: Text(
+                             "Thưởng Vượt Chuyến Tuần : "+  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ?? '')+"đ",
+                              style: hsRegular.copyWith(fontSize: 14,color: DailozColor.tim),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+
+
+                SizedBox(height: height/36,),
                 Row(
                   children: [
                     Container(
