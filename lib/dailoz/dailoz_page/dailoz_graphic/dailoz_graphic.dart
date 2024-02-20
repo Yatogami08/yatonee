@@ -28,6 +28,8 @@ class _DailozTaskState extends State<DailozGraphic> {
   int isselected = 0;
   final themedata = Get.put(DailozThemecontroler());
 
+
+
   List name = ["Thứ Hai 2024-01-01","ngày 2","ngày 3","ngày 4","ngày 5","ngày 6","ngày 7"];
 
   List name2 = ["test","Dữ liệu 2","Dữ liệu 3"];
@@ -731,7 +733,7 @@ class _DailozTaskState extends State<DailozGraphic> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: width/20),
                             child: Text(
-                             "Thưởng Vượt Chuyến Tuần : "+  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ?? '')+"đ",
+                             "Thưởng Vượt Chuyến + Thưởng cao điểm : "+  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ??   '') + " và "+ formatCurrency(dataForSelectedWeek?['total_cd_sang_toi_sum'].toString() ?? '') +"đ",
                               style: hsRegular.copyWith(fontSize: 14,color: DailozColor.tim),
                             ),
                           ),
@@ -861,28 +863,66 @@ class _DailozTaskState extends State<DailozGraphic> {
     if (caDangKi.contains('5h')) {
       if (totalTongDiem < 90) {
         return 'Chưa có thưởng';
-      } else if (totalTongDiem >= 90 && totalTongDiem <= 114) {
+      } else if (totalTongDiem >= 100 && totalTongDiem <= 114) {
         return 'Thưởng hiện tại: 200.000đ';
       } else if (totalTongDiem >= 115 && totalTongDiem <= 134) {
-        return 'Thưởng hiện tại: 300.000đ';
+        return 'Thưởng hiện tại: 250.000đ';
       } else {
-        return 'Thưởng hiện tại: 400.000đ';
+        return 'Thưởng hiện tại: 350.000đ';
       }
-    } else if (caDangKi.contains('8h') || caDangKi.contains('10h')) {
-      if (totalTongDiem < 135) {
+    }
+
+    else if (caDangKi.contains('8h')) {
+      if (totalTongDiem < 140) {
         return 'Chưa có thưởng';
-      } else if (totalTongDiem >= 135 && totalTongDiem <= 164) {
-        return 'Thưởng hiện tại: 500.000đ';
+      } else if (totalTongDiem >= 140 && totalTongDiem <= 164) {
+        return 'Thưởng hiện tại: 450.000đ';
       } else if (totalTongDiem >= 165 && totalTongDiem <= 194) {
         return 'Thưởng hiện tại: 600.000đ';
-      } else if (totalTongDiem >= 195 && totalTongDiem <= 224) {
-        return 'Thưởng hiện tại: 700.000đ';
+      } else if (totalTongDiem >= 195 && totalTongDiem <= 229) {
+        return 'Thưởng hiện tại: 800.000đ';
       } else {
-        return 'Thưởng hiện tại: 1.100.000đ';
+        return 'Thưởng hiện tại: 1.200.000đ';
       }
     } else {
+
+
+      if (caDangKi.contains('10h')) {
+        if (totalTongDiem < 140) {
+          return 'Chưa có thưởng';
+        } else if (totalTongDiem >= 150 && totalTongDiem <= 179) {
+          return 'Thưởng hiện tại: 500.000đ';
+        } else if (totalTongDiem >= 180 && totalTongDiem <= 214) {
+          return 'Thưởng hiện tại: 700.000đ';
+        } else if (totalTongDiem >= 215 && totalTongDiem <= 259) {
+          return 'Thưởng hiện tại: 1.000.000đ';
+        } else {
+          return 'Thưởng hiện tại: 1.500.000đ';
+        }
+      } else {
+
+
+
+
+        return ''; // Xử lý trường hợp khác nếu cần
+      }
+
+
+
       return ''; // Xử lý trường hợp khác nếu cần
     }
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   String formatCurrency(String value) {
@@ -908,28 +948,45 @@ class _DailozTaskState extends State<DailozGraphic> {
       return 'Không đạt điều kiện thưởng';
     }
     if (caDangKi.contains('5h')) {
-      if (totalTongDiem < 90) {
-        return 'Còn Thiếu ${90 - totalTongDiem} điểm để đạt mốc 200,000đ';
-      } else if (totalTongDiem >= 90 && totalTongDiem < 115) {
-        return 'Còn Thiếu ${115 - totalTongDiem} điểm để đạt mốc 300,000đ';
+      if (totalTongDiem < 100) {
+        return 'Còn Thiếu ${100 - totalTongDiem} điểm để đạt mốc 200,000đ';
+      } else if (totalTongDiem >= 100 && totalTongDiem < 115) {
+        return 'Còn Thiếu ${115 - totalTongDiem} điểm để đạt mốc 250,000đ';
       } else if (totalTongDiem >= 115 && totalTongDiem < 135) {
-        return 'Còn Thiếu ${135 - totalTongDiem} điểm để đạt mốc 400,000đ';
+        return 'Còn Thiếu ${135 - totalTongDiem} điểm để đạt mốc 350,000đ';
       } else {
         return 'Bạn đã đạt mức thưởng tối đa của Đại Sứ 5 Giờ';
       }
-    } else if (caDangKi.contains('8h') || caDangKi.contains('10h')) {
-      if (totalTongDiem < 135) {
-        return 'Còn Thiếu ${135 - totalTongDiem} điểm để đạt mốc 500,000đ';
-      } else if (totalTongDiem >= 135 && totalTongDiem < 165) {
+    } else if (caDangKi.contains('8h') ) {
+      if (totalTongDiem < 140) {
+        return 'Còn Thiếu ${140 - totalTongDiem} điểm để đạt mốc 450,000đ';
+      } else if (totalTongDiem >= 140 && totalTongDiem < 165) {
         return 'Còn Thiếu ${165 - totalTongDiem} điểm để đạt mốc 600,000đ';
       } else if (totalTongDiem >= 165 && totalTongDiem < 195) {
-        return 'Còn Thiếu ${195 - totalTongDiem} điểm để đạt mốc 700,000đ';
-      } else if (totalTongDiem >= 195 && totalTongDiem < 225) {
-        return 'Còn Thiếu ${225 - totalTongDiem} điểm để đạt mốc 1,100,000đ';
+        return 'Còn Thiếu ${195 - totalTongDiem} điểm để đạt mốc 800,000đ';
+      } else if (totalTongDiem >= 195 && totalTongDiem < 230) {
+        return 'Còn Thiếu ${230 - totalTongDiem} điểm để đạt mốc 1,200,000đ';
       } else {
         return 'Bạn đã đạt mức thưởng tối đa của Đại Sứ 8 Giờ và 10 Giờ';
       }
     } else {
+
+
+     if (caDangKi.contains('10h')) {
+    if (totalTongDiem < 150) {
+    return 'Còn Thiếu ${150 - totalTongDiem} điểm để đạt mốc 500,000đ';
+    } else if (totalTongDiem >= 150 && totalTongDiem < 180) {
+    return 'Còn Thiếu ${180 - totalTongDiem} điểm để đạt mốc 700,000đ';
+    } else if (totalTongDiem >= 180 && totalTongDiem < 215) {
+    return 'Còn Thiếu ${215 - totalTongDiem} điểm để đạt mốc 1.000,000đ';
+    } else if (totalTongDiem >= 215 && totalTongDiem < 260) {
+    return 'Còn Thiếu ${260 - totalTongDiem} điểm để đạt mốc 1,500,000đ';
+    } else {
+    return 'Bạn đã đạt mức thưởng tối đa của Đại Sứ 8 Giờ và 10 Giờ';
+    }
+    }
+
+
       return ''; // Xử lý trường hợp khác nếu cần
     }
   }

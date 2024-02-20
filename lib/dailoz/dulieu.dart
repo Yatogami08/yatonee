@@ -426,6 +426,15 @@ class DatabaseHelper {
     SELECT 
       COALESCE(SUM(cd_sang), 0) as total_cd_sang,
       COALESCE(SUM(cd_toi), 0) as total_cd_toi,
+      
+      CASE 
+       WHEN COALESCE(SUM(cd_sang) + SUM(cd_toi), 0) BETWEEN 0 AND 25 THEN 0
+        WHEN COALESCE(SUM(cd_sang) + SUM(cd_toi), 0) BETWEEN 25 AND 39 THEN 60000
+        WHEN COALESCE(SUM(cd_sang) + SUM(cd_toi), 0) BETWEEN 40 AND 59 THEN 120000
+        ELSE 250000
+      END as total_cd_sang_toi_sum,
+
+      
       COALESCE(SUM(don_thuong), 0) as total_don_thuong,
       COALESCE(SUM(tong_chuyen), 0) as total_tong_chuyen,
 
@@ -454,6 +463,10 @@ COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
       AND tilehoanthanhchuyen IS NOT NULL
       AND tilehuychuyen IS NOT NULL;
   ''');
+
+    // Format result for display
+
+
 
     return result.isNotEmpty ? result.first : {};
   }
