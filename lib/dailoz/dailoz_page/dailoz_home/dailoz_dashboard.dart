@@ -49,9 +49,12 @@ class _DailozDashboardState extends State<DailozDashboard> {
     final result = await databaseHelper.fetchCaDangKiAdmin();
     setState(() {
       khuvuc = result['khuvuc'] ?? "";
+      _initPages(); // Gọi lại _initPages sau khi cập nhật giá trị khuvuc
+
     });
   }
   void _initPages() {
+
     _pages = [
       Dailozhome(),
       DailozTask(),
@@ -61,6 +64,7 @@ class _DailozDashboardState extends State<DailozDashboard> {
       DailozProfile(),
     ];
   }
+
 
   void init() async {
     //
@@ -128,6 +132,7 @@ class _DailozDashboardState extends State<DailozDashboard> {
   void _onTap(int index) {
     setState(() {
       _selectedItemIndex = index;
+      _initPages();
     });
   }
 

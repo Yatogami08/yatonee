@@ -86,7 +86,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
           ),
         ),
         title: Text(
-          "Personal".tr,
+          "Khu vực".tr,
           style: hsSemiBold.copyWith(fontSize: 18),
         ),
       ),
@@ -312,7 +312,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
                 Navigator.of(context).pop();
 
 
-     
+
 
 
 

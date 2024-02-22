@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
+import '../dailoz_profile/dailoz_private.dart';
 import '../dailoz_task/dailoz_taskdetail.dart';
 import '../dailoz_task/lichsuitem.dart';
 import '../dailoz_task/themdulieu.dart';
@@ -363,39 +364,9 @@ class _DailozhomeState extends State<Dailozhome> {
                       splashColor: DailozColor.transparent,
                       highlightColor: DailozColor.transparent,
                       onTap: () {
-                        createBoard().then((result) {
-                          if (result) {
-                            // Hiển thị thông báo hoặc thực hiện các hành động sau khi lưu thông tin thành công
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Thay đổi Thành công'),
-
-
-
-
-                              ),
-                            );
-                          } else {
-                            // Xử lý trường hợp lưu thông tin không thành công
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Thay đổi thất bại!'),
-
-
-
-
-                              ),
-                            );
-                          }
-                        });
-
-
-
-
-
-
-
-
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const khuvucdangki();
+                        },));
                       },
                       child: Container(
                         height: height / 6,
