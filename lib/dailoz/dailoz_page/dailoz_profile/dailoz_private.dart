@@ -312,7 +312,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
                 Navigator.of(context).pop();
 
 
-                widget.onConfirmationAccepted();
+     
 
 
 
