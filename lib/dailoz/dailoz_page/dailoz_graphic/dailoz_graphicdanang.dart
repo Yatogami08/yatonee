@@ -9,18 +9,18 @@ import '../../dulieu.dart';
 
 
 
-class miennamchitiet extends StatefulWidget {
+class dangnangchitiet extends StatefulWidget {
   late DateTime startDateOfWeek;
   late DateTime endDateOfWeek;
   final Function() onLeftArrowPressed;
   final Function() onRightArrowPressed;
 
-  miennamchitiet({Key? key, required this.onLeftArrowPressed, required this.onRightArrowPressed}) : super(key: key);
+  dangnangchitiet({Key? key, required this.onLeftArrowPressed, required this.onRightArrowPressed}) : super(key: key);
 
-  State<miennamchitiet> createState() => _DailozTaskState();
+  State<dangnangchitiet> createState() => _DailozTaskState();
 }
 
-class _DailozTaskState extends State<miennamchitiet> {
+class _DailozTaskState extends State<dangnangchitiet> {
   Map<String, dynamic>? dataForSelectedWeek;
   dynamic size;
   double height = 0.00;

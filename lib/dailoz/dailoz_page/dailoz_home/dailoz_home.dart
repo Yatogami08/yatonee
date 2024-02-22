@@ -2,9 +2,11 @@ import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_color.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_fontstyle.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_icons.dart';
 import 'package:dailoz/dailoz/dailoz_page/dailoz_task/chitietlichsu.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
 import '../dailoz_task/dailoz_taskdetail.dart';
 import '../dailoz_task/lichsuitem.dart';
@@ -93,7 +95,7 @@ class _DailozhomeState extends State<Dailozhome> {
   }
 
 
-
+  final themedata = Get.put(DailozThemecontroler());
   dynamic size;
   double height = 0.00;
   double width = 0.00;
@@ -198,7 +200,7 @@ class _DailozhomeState extends State<Dailozhome> {
                             if (snapshot.hasData) {
                               String formattedHour = convertHourFormat(snapshot.data!);
                               return Text(
-                                "App dev by (0397770219 Zalo)",
+                                "App dev by (0397770219 Zalo) - Hà Nội,HCM,Đà nẵng",
                                 style: hsRegular.copyWith(fontSize: 14),
                               );
                             } else {
@@ -235,371 +237,176 @@ class _DailozhomeState extends State<Dailozhome> {
                   )
                 ],
               ),
+
+
+
               SizedBox(height: height/36,),
               Text("My_Task".tr,style: hsSemiBold.copyWith(fontSize: 24),),
               SizedBox(height: height/36,),
+
+
+              //11212
               Row(
                 children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        splashColor: DailozColor.transparent,
-                        highlightColor: DailozColor.transparent,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return DailozMyTask("Completed");
-                          },));
-                        },
-                        child: Container(
-                          height: height/4.5,
-                          width: width/2.2,
-                          decoration: BoxDecoration(
-                              color: DailozColor.lightblue,
-                            borderRadius: BorderRadius.circular(14)
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(DailozPngimage.iMac,height: height/10,fit: BoxFit.fitHeight,),
-                                    const Spacer(),
-                                    const Icon(Icons.arrow_forward,color: DailozColor.black,size: 22,)
-                                  ],
-                                ),
-                                SizedBox(height: height/66,),
-                                Text("Completed".tr,style: hsMedium.copyWith(fontSize: 16,color: DailozColor.black),),
-                                SizedBox(height: height/120,),
-                                Text("86"+"lan_them".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.black),),
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DailozMyTask("Completed")),
+                        );
+                      },
+                      child: Container(
+                        height: height / 6,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.lightblue,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.iMac, height: height / 10, fit: BoxFit.fitHeight),
 
-                              ],
+                            Text(
+                              "test".tr,
+                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.black),
                             ),
-                          ) ,
+                            SizedBox(height: 4),
+
+                          ],
                         ),
                       ),
-                      SizedBox(height: height/56,),
-                      InkWell(
-                        splashColor: DailozColor.transparent,
-                        highlightColor: DailozColor.transparent,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return DailozMyTask("Canceled");
-                          },));
-                        },
-                        child: Container(
-                          height: height/6,
-                          width: width/2.2,
-                          decoration: BoxDecoration(
-                              color: DailozColor.lightred,
-                              borderRadius: BorderRadius.circular(14)
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(DailozPngimage.closeSquare,height: height/21,fit: BoxFit.fitHeight,),
-                                    const Spacer(),
-                                    const Icon(Icons.arrow_forward,color: DailozColor.white,size: 22,)
-                                  ],
-                                ),
-                                SizedBox(height: height/66,),
-                                Text("Canceled".tr,style: hsMedium.copyWith(fontSize: 16,color: DailozColor.white),),
-                                SizedBox(height: height/120,),
-                                Text("15"+"lan_them".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.white),),
 
-                              ],
-                            ),
-                          ) ,
-                        ),
-                      ),
-                    ],
+
+
+
+                    ),
+
+
+
                   ),
-                  const Spacer(),
-                  Column(
-                    children: [
-                      InkWell(
-                        splashColor: DailozColor.transparent,
-                        highlightColor: DailozColor.transparent,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return DailozMyTask("Pending");
-                          },));
-                        },
-                        child: Container(
-                          height: height/6,
-                          width: width/2.2,
-                          decoration: BoxDecoration(
-                              color: DailozColor.purple,
-                              borderRadius: BorderRadius.circular(14)
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(DailozPngimage.timeSquare,height: height/21,fit: BoxFit.fitHeight,),
-                                    const Spacer(),
-                                    const Icon(Icons.arrow_forward,color: DailozColor.white,size: 22,)
-                                  ],
-                                ),
-                                SizedBox(height: height/66,),
-                                Text("Pending".tr,style: hsMedium.copyWith(fontSize: 16,color: DailozColor.white),),
-                                SizedBox(height: height/120,),
-                                Text("15"+"lan_them".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.white),),
-
-                              ],
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DailozMyTask("Canceled")),
+                        );
+                      },
+                      child: Container(
+                        height: height / 6,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.lightred,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.iMac, height: height / 14, fit: BoxFit.fitHeight),
+                            SizedBox(height: 8), // Khoảng cách giữa các phần tử trong Column
+                            SizedBox(height: 8),
+                            Text(
+                              "test".tr,
+                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.white),
                             ),
-                          ) ,
+
+                          ],
                         ),
                       ),
-                      SizedBox(height: height/56,),
-                      InkWell(
-                        splashColor: DailozColor.transparent,
-                        highlightColor: DailozColor.transparent,
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return DailozMyTask("OnGoing");
-                          },));
-                        },
-                        child: Container(
-                          height: height/4.5,
-                          width: width/2.2,
-                          decoration: BoxDecoration(
-                              color: DailozColor.lightgreen,
-                              borderRadius: BorderRadius.circular(14)
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Image.asset(DailozPngimage.iMac,height: height/10,fit: BoxFit.fitHeight,),
-                                    const Spacer(),
-                                    const Icon(Icons.arrow_forward,color: DailozColor.black,size: 22,)
-                                  ],
-                                ),
-                                SizedBox(height: height/66,),
-                                Text("On_Going".tr,style: hsMedium.copyWith(fontSize: 16,color: DailozColor.black),),
-                                SizedBox(height: height/120,),
-                                Text("67"+"lan_them".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.black),),
-
-                              ],
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DailozMyTask("Pending")),
+                        );
+                      },
+                      child: Container(
+                        height: height / 6,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.purple,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.iMac, height: height / 14, fit: BoxFit.fitHeight),
+                            SizedBox(height: 8), // Khoảng cách giữa các phần tử trong Column
+                            SizedBox(height: 8),
+                            Text(
+                              "test".tr,
+                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.white),
                             ),
-                          ) ,
+
+
+                          ],
                         ),
                       ),
-
-                    ],
-                  )
-                ],
-              ),
-              SizedBox(height: height/26,),
-              Row(
-                children: [
-                  Text("Today_Task".tr,style: hsSemiBold.copyWith(fontSize: 24),),
-                  const Spacer(),
-                  Text("View_all".tr,style: hsRegular.copyWith(fontSize: 12,color: DailozColor.appcolor),),
-                ],
-              ),
-
-
-
-
-              ListView.builder(
-                itemCount: lichSuItems.length, // Hiển thị tối đa 4 dữ liệu gần đây nhất
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  // Lấy dữ liệu từ cơ sở dữ liệu (sử dụng FutureBuilder)
-                  return FutureBuilder<Map<String, dynamic>>(
-                    future: DatabaseHelper().getRecentData(index),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        if (snapshot.hasData) {
-                          Map<String, dynamic> data = snapshot.data!;
-                          String date = data['ngay'] ?? '';
-
-                          if (date.isNotEmpty) {
-                            return InkWell(
-                              splashColor: DailozColor.transparent,
-                              highlightColor: DailozColor.transparent,
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return chitietlichsu(
-                                    item: lichSuItems[index],
-                                    initDataCallback: _initData,
-                                  );
-                                }));
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: height / 46),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14),
-                                  color: DailozColor.bggray,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: width / 36,
-                                    vertical: height / 66,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '${lichSuItems[index].thu} ${lichSuItems[index].ngay}',
-                                            style: hsMedium.copyWith(
-                                              fontSize: 16,
-                                              color: DailozColor.black,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Image.asset(DailozPngimage.dot, height: height / 36),
-                                        ],
-                                      ),
-                                      SizedBox(height: height / 200),
-                                      Text(
-                                        "Hoạt động : ${lichSuItems[index].thoigianHd}",
-                                        style: hsRegular.copyWith(
-                                          fontSize: 14,
-                                          color: DailozColor.textgray,
-                                        ),
-                                      ),
-                                      SizedBox(height: height / 66),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: const Color(0x338F99EB),
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: width / 36,
-                                                vertical: height / 120,
-                                              ),
-                                              child: Text(
-                                                "Đại Sứ ${lichSuItems[index].caDangKi}",
-                                                style: hsMedium.copyWith(
-                                                  fontSize: 10,
-                                                  color: DailozColor.red,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: width / 36),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: const Color(0x338F99EB),
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: width / 36,
-                                                vertical: height / 120,
-                                              ),
-                                              child: Text(
-                                                "Vượt chuyến ${lichSuItems[index].vuotChuyen}đ",
-                                                style: hsMedium.copyWith(
-                                                  fontSize: 10,
-                                                  color: DailozColor.tim,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(width: width / 36),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: const Color(0x338F99EB),
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: width / 36,
-                                                vertical: height / 120,
-                                              ),
-                                              child: Text(
-                                                "${lichSuItems[index].tongDiem.toDouble()} điểm",
-                                                style: hsMedium.copyWith(
-                                                  fontSize: 10,
-                                                  color: DailozColor.xanh,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-
-
-                                          SizedBox(width: width / 36),
-
-                                          if (lichSuItems[index].isNewest)
-
-                                            Column(
-
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(width: width / 36),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: DailozColor.yatogamineee,
-                                                    borderRadius: BorderRadius.circular(5),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                      horizontal: width / 36,
-                                                      vertical: height / 120,
-                                                    ),
-                                                    child: Text(
-                                                      "Mới thêm gần đây",
-                                                      style: hsMedium.copyWith(
-                                                        fontSize: 10,
-                                                        color: DailozColor.tim,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        createBoard().then((result) {
+                          if (result) {
+                            // Hiển thị thông báo hoặc thực hiện các hành động sau khi lưu thông tin thành công
+                            print('Thông tin đã được lưu thành công!');
                           } else {
-                            return Container(); // Trả về một Container rỗng nếu không có dữ liệu
+                            // Xử lý trường hợp lưu thông tin không thành công
+                            print('Đã xảy ra lỗi khi lưu thông tin!');
                           }
-                        } else {
-                          return Container(); // Trả về một Container rỗng nếu không có dữ liệu
-                        }
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  );
-                },
-              )
+                        });
+                      },
+                      child: Container(
+                        height: height / 6,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.lightgreen,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.iMac, height: height / 10, fit: BoxFit.fitHeight),
+
+                            Text(
+                              "Thiết Lập".tr,
+                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.black),
+                            ),
+                            SizedBox(height: 4),
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
 
 
 
 
 
-
+              SizedBox(height: height/26,),
           ],
           ),
         ),
@@ -609,22 +416,9 @@ class _DailozhomeState extends State<Dailozhome> {
         backgroundColor: DailozColor.appcolor,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-
-
-
-
             return themdulieu(
-
               initDataCallback: _initData,
             );
-
-
-
-
-
-
-
-
 
           },));
         },
@@ -632,6 +426,132 @@ class _DailozhomeState extends State<Dailozhome> {
       ),
 
 
+
+
     );
   }
+
+
+  Future<bool> createBoard() async {
+    String selectedKhuvuc = 'hanoi';
+    String selectedCaDangKi = '5h';
+
+    final Map<String, String> khuVucMapping = {
+      'Hà Nội': 'hanoi',
+      'HCM,BD,Đồng Nai': 'miennam',
+      'Đà Nẵng': 'danang',
+    };
+
+    final Map<String, String> caDangKiMapping = {
+      'Đại Sứ 5 Giờ': '5h',
+      'Đại sứ 8 Giờ': '8h',
+      'Đại sứ 10 Giờ': '10h',
+    };
+
+    await showDialog(
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: width / 56, vertical: height / 96),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Thiết lập ứng dụng", style: hsSemiBold.copyWith(fontSize: 22)),
+                SizedBox(height: height / 40),
+                Text("Chọn khu vực", style: hsSemiBold.copyWith(fontSize: 14, color: DailozColor.tenka)),
+                SizedBox(height: height / 46),
+                CupertinoPicker(
+                  itemExtent: 32.0,
+                  onSelectedItemChanged: (int index) {
+                    selectedKhuvuc = khuVucMapping.values.elementAt(index);
+                  },
+                  children: khuVucMapping.keys.map((String key) {
+                    return Center(
+                      child: Text(
+                        key,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: themedata.isdark ? DailozColor.white : DailozColor.black,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: height / 46),
+                Text("Chọn Ca đăng kí", style: hsSemiBold.copyWith(fontSize: 14, color: DailozColor.tenka)),
+                SizedBox(height: height / 46),
+                CupertinoPicker(
+                  itemExtent: 32.0,
+                  onSelectedItemChanged: (int index) {
+                    selectedCaDangKi = caDangKiMapping.values.elementAt(index);
+                  },
+                  children: caDangKiMapping.keys.map((String key) {
+                    return Center(
+                      child: Text(
+                        key,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: themedata.isdark ? DailozColor.white : DailozColor.black,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: height / 30),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        splashColor: DailozColor.transparent,
+                        highlightColor: DailozColor.transparent,
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: height / 20,
+                          width: width / 4,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: DailozColor.appcolor)
+                          ),
+                          child: Center(child: Text("Mặc định", style: hsRegular.copyWith(fontSize: 14, color: DailozColor.appcolor))),
+                        ),
+                      ),
+                      SizedBox(width: width / 36),
+                      InkWell(
+                        splashColor: DailozColor.transparent,
+                        highlightColor: DailozColor.transparent,
+                        onTap: () async {
+                          await DatabaseHelper().saveBoardInfo(selectedKhuvuc, selectedCaDangKi);
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: height / 20,
+                          width: width / 4,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              color: DailozColor.appcolor
+                          ),
+                          child: Center(child: Text("Lưu Thông tin", style: hsRegular.copyWith(fontSize: 14, color: DailozColor.white))),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: height / 56),
+              ],
+            ),
+          )
+        ],
+      ),
+      context: context,
+    );
+    return true;
+  }
+
+
+
 }

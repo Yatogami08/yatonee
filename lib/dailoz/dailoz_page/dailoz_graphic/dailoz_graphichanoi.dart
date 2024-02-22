@@ -9,18 +9,18 @@ import '../../dulieu.dart';
 
 
 
-class miennamchitiet extends StatefulWidget {
+class hanoichitiet extends StatefulWidget {
   late DateTime startDateOfWeek;
   late DateTime endDateOfWeek;
   final Function() onLeftArrowPressed;
   final Function() onRightArrowPressed;
 
-  miennamchitiet({Key? key, required this.onLeftArrowPressed, required this.onRightArrowPressed}) : super(key: key);
+  hanoichitiet({Key? key, required this.onLeftArrowPressed, required this.onRightArrowPressed}) : super(key: key);
 
-  State<miennamchitiet> createState() => _DailozTaskState();
+  State<hanoichitiet> createState() => _DailozTaskState();
 }
 
-class _DailozTaskState extends State<miennamchitiet> {
+class _DailozTaskState extends State<hanoichitiet> {
   Map<String, dynamic>? dataForSelectedWeek;
   dynamic size;
   double height = 0.00;
@@ -733,7 +733,7 @@ class _DailozTaskState extends State<miennamchitiet> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: width/20),
                             child: Text(
-                             "Thưởng Vượt Chuyến "+  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ??   '') ,
+                             "Thưởng Vượt Chuyến + Thưởng cao điểm : "+  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ??   '') + " và "+ formatCurrency(dataForSelectedWeek?['total_cd_sang_toi_sum'].toString() ?? '') +"đ",
                               style: hsRegular.copyWith(fontSize: 14,color: DailozColor.tim),
                             ),
                           ),
@@ -811,6 +811,7 @@ class _DailozTaskState extends State<miennamchitiet> {
                   ],
                 ),
 
+
                 SizedBox(height: height/36,),
                 Row(
                   children: [
@@ -876,7 +877,6 @@ class _DailozTaskState extends State<miennamchitiet> {
                     ),
                   ],
                 ),
-
 
 
 
@@ -1019,7 +1019,7 @@ class _DailozTaskState extends State<miennamchitiet> {
       } else if (totalTongDiem >= 115 && totalTongDiem < 135) {
         return 'Còn Thiếu ${135 - totalTongDiem} điểm để đạt mốc 350,000đ';
       } else {
-        return 'Thưởng hiện tại : 350,000đ (tối đa)';
+        return 'Bạn đã đạt mức thưởng tối đa của Đại Sứ 5 Giờ';
       }
     } else if (caDangKi.contains('8h') ) {
       if (totalTongDiem < 140) {
@@ -1028,8 +1028,10 @@ class _DailozTaskState extends State<miennamchitiet> {
         return 'Còn Thiếu ${165 - totalTongDiem} điểm để đạt mốc 600,000đ';
       } else if (totalTongDiem >= 165 && totalTongDiem < 195) {
         return 'Còn Thiếu ${195 - totalTongDiem} điểm để đạt mốc 800,000đ';
+      } else if (totalTongDiem >= 195 && totalTongDiem < 230) {
+        return 'Còn Thiếu ${230 - totalTongDiem} điểm để đạt mốc 1,200,000đ';
       } else {
-        return 'Thưởng hiện tại : 800,000đ (tối đa)';
+        return 'Bạn đã đạt mức thưởng tối đa của Đại Sứ 8 Giờ và 10 Giờ';
       }
     } else {
      if (caDangKi.contains('10h')) {
@@ -1039,8 +1041,10 @@ class _DailozTaskState extends State<miennamchitiet> {
     return 'Còn Thiếu ${180 - totalTongDiem} điểm để đạt mốc 700,000đ';
     } else if (totalTongDiem >= 180 && totalTongDiem < 215) {
     return 'Còn Thiếu ${215 - totalTongDiem} điểm để đạt mốc 1.000,000đ';
+    } else if (totalTongDiem >= 215 && totalTongDiem < 260) {
+    return 'Còn Thiếu ${260 - totalTongDiem} điểm để đạt mốc 1,500,000đ';
     } else {
-    return 'Thưởng hiện tại : 1.000,000đ (tối đa)';
+    return 'Bạn đã đạt mức thưởng tối đa của Đại Sứ 8 Giờ và 10 Giờ';
     }
     }
 

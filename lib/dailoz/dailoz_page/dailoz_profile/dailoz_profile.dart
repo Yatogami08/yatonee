@@ -405,8 +405,8 @@ class _DailozProfileState extends State<DailozProfile> {
                                 )
                             ),
                             SizedBox(height: height/56,),
-                            Text("Create_Board".tr,style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
-                            Text("6 Task",style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
+                            Text("test".tr,style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
+                            Text("test",style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
 
                           ],
                         ),

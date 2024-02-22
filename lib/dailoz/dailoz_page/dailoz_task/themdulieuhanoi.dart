@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import 'package:intl/intl.dart';
@@ -32,7 +31,6 @@ class themdulieu extends StatefulWidget {
 
 class _DailozAddTaskState extends State<themdulieu> {
   late String caDangKiAdmin;
-  late String khuvuc;
   int caoDiemSang = 0;
   int caoDiemToi = 0;
   int donThuong = 0;
@@ -60,7 +58,6 @@ class _DailozAddTaskState extends State<themdulieu> {
     dateController.text = DateFormat('EEEE, dd/MM/yyyy', 'vi_VN').format(DateTime.now());
     pickedDate = DateTime.now();
     caDangKiAdmin = "";
-    khuvuc= "";
     chuoiThoiGian ="";
     _fetchCaDangKiAdmin();
   }
@@ -71,14 +68,8 @@ class _DailozAddTaskState extends State<themdulieu> {
     final result = await databaseHelper.fetchCaDangKiAdmin();
     setState(() {
       caDangKiAdmin = result['ca_dangkiadmin'] ?? "";
-      khuvuc = result['khuvuc'] ?? "";
     });
   }
-
-
-
-
-
   void _calculateTotalScore() {
     TimeOfDay thoiGian = TimeOfDay(hour: gio, minute: phut);
      chuoiThoiGian = "${thoiGian.hour}.${thoiGian.minute}";
@@ -96,115 +87,51 @@ class _DailozAddTaskState extends State<themdulieu> {
 
 
       }
-      _thuongvuotmoc();
+      _calculateBonus();
     });
   }
 
-  void _thuongvuotmoc() async {
-
-    Database db = await DatabaseHelper().database;
-
-    List<Map<String, dynamic>> rows = await db.query(khuvuc);
-    Map<String, dynamic> hanoiData = rows.isNotEmpty ? rows.first : {};
-
-    print('vcll $khuvuc'); // Thêm dòng log này
-
-
-
-
-    int h5hvuotmoc1 = 0;
-    int h5hvuotmoc2 = 0;
-    int h5hvuotmoc3 = 0;
-    int h5hvuotmoc4 = 0;
-
-    int h8hvuotmoc1 = 0;
-    int h8hvuotmoc2 = 0;
-    int h8hvuotmoc3 = 0;
-    int h8hvuotmoc4 = 0;
-    int h10hvuotmoc1 = 0;
-    int h10hvuotmoc2 = 0;
-    int h10hvuotmoc3 = 0;
-    int h10hvuotmoc4 = 0;
-
-    if (khuvuc == "hanoi") {
-      h5hvuotmoc1 = hanoiData['h5hvuotmoc1'];
-      h5hvuotmoc2 = hanoiData['h5hvuotmoc2'];
-      h5hvuotmoc3 = hanoiData['h5hvuotmoc3'];
-      h5hvuotmoc4 = hanoiData['h5hvuotmoc4'];
-
-      h8hvuotmoc1 = hanoiData['h8hvuotmoc1'];
-      h8hvuotmoc2 = hanoiData['h8hvuotmoc2'];
-      h8hvuotmoc3 = hanoiData['h8hvuotmoc3'];
-      h8hvuotmoc4 = hanoiData['h8hvuotmoc4'];
-      h10hvuotmoc1 = hanoiData['h10hvuotmoc1'];
-      h10hvuotmoc2 = hanoiData['h10hvuotmoc2'];
-      h10hvuotmoc3 = hanoiData['h10hvuotmoc3'];
-      h10hvuotmoc4 = hanoiData['h10hvuotmoc4'];
-      print('vcll $khuvuc'); // Thêm dòng log này
-
-    } else if (khuvuc == "miennam") {
-      h5hvuotmoc1 = hanoiData['h5hvuotmoc1'];
-      h5hvuotmoc2 = hanoiData['h5hvuotmoc2'];
-      h5hvuotmoc3 = hanoiData['h5hvuotmoc3'];
-      h5hvuotmoc4 = hanoiData['h5hvuotmoc4'];
-
-      h8hvuotmoc1 = hanoiData['h8hvuotmoc1'];
-      h8hvuotmoc2 = hanoiData['h8hvuotmoc2'];
-      h8hvuotmoc3 = hanoiData['h8hvuotmoc3'];
-      h8hvuotmoc4 = hanoiData['h8hvuotmoc4'];
-      h10hvuotmoc1 = hanoiData['h10hvuotmoc1'];
-      h10hvuotmoc2 = hanoiData['h10hvuotmoc2'];
-      h10hvuotmoc3 = hanoiData['h10hvuotmoc3'];
-      h10hvuotmoc4 = hanoiData['h10hvuotmoc4'];
-    } else if (khuvuc == "danang") {
-      h5hvuotmoc1 = hanoiData['h5hvuotmoc1'];
-      h5hvuotmoc2 = hanoiData['h5hvuotmoc2'];
-      h5hvuotmoc3 = hanoiData['h5hvuotmoc3'];
-      h5hvuotmoc4 = hanoiData['h5hvuotmoc4'];
-
-      h8hvuotmoc1 = hanoiData['h8hvuotmoc1'];
-      h8hvuotmoc2 = hanoiData['h8hvuotmoc2'];
-      h8hvuotmoc3 = hanoiData['h8hvuotmoc3'];
-      h8hvuotmoc4 = hanoiData['h8hvuotmoc4'];
-      h10hvuotmoc1 = hanoiData['h10hvuotmoc1'];
-      h10hvuotmoc2 = hanoiData['h10hvuotmoc2'];
-      h10hvuotmoc3 = hanoiData['h10hvuotmoc3'];
-      h10hvuotmoc4 = hanoiData['h10hvuotmoc4'];
-    }
-
-
-
-
-
+  void _calculateBonus() {
 
 
     tongDiemsm = caoDiemSang + caoDiemToi + donThuong;
     if (caDangKiAdmin == '5h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 5.0 ) {
-      if (tongDiemsm >= h5hvuotmoc1) {
-        thuongVuotMoc = (h5hvuotmoc1 - h8hvuotmoc2 + 1) * h5hvuotmoc3 + (tongDiemsm - h5hvuotmoc1) * h5hvuotmoc4;
+      if (tongDiemsm >= 14) {
+        thuongVuotMoc = (14 - 10 + 1) * 3000 + (tongDiemsm - 14) * 5000;
       } else {
-        thuongVuotMoc = (tongDiemsm - h5hvuotmoc2 + 1) * h5hvuotmoc3;
+        thuongVuotMoc = (tongDiemsm - 10 + 1) * 3000;
       }
     }
     else if (caDangKiAdmin == '8h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 8.0) {
-      if (tongDiemsm >= h8hvuotmoc1) {
-        thuongVuotMoc = (h8hvuotmoc1 - h8hvuotmoc2  + 1) * h8hvuotmoc3  + (tongDiemsm - h8hvuotmoc1) * h8hvuotmoc4;
+      if (tongDiemsm >= 18) {
+        thuongVuotMoc = (18 - 14 + 1) * 5000 + (tongDiemsm - 18) * 6000;
       } else {
-        thuongVuotMoc = (tongDiemsm - h8hvuotmoc2  + 1) * h8hvuotmoc3 ;
+        thuongVuotMoc = (tongDiemsm - 14 + 1) * 5000;
       }
     }
     else if (caDangKiAdmin == '10h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 10.0) {
-      if (tongDiemsm >= h10hvuotmoc1) {
-        thuongVuotMoc = (h10hvuotmoc1 - h10hvuotmoc2 + 1) * h10hvuotmoc3 + (tongDiemsm - h10hvuotmoc1) * h10hvuotmoc4;
+      if (tongDiemsm >= 22) {
+        thuongVuotMoc = (22 - 18 + 1) * 6000 + (tongDiemsm - 22) * 8000;
       } else {
-        thuongVuotMoc = (tongDiemsm - h10hvuotmoc2 + 1) * h10hvuotmoc3;
+        thuongVuotMoc = (tongDiemsm - 18 + 1) * 6000;
       }
     }
+
+
+
+
+
+
     else {
       thuongVuotMoc = 0;
     }
-    thuongVuotMoc = thuongVuotMoc < 0 ? 0 : thuongVuotMoc;
 
+
+
+
+
+
+    thuongVuotMoc = thuongVuotMoc < 0 ? 0 : thuongVuotMoc;
 
 
   }
@@ -306,12 +233,12 @@ widget.initDataCallback();
   String _calculateGuaranteedIncome() {
 
     NumberFormat currencyFormatter = NumberFormat("#,##0", "vi_VN");
-    if (caDangKiAdmin == '5h' && chuoiThoiGian.toDouble() >= 5.0 && thunhap < 274000 && tongDiemsm >= 8 && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
-      return '${currencyFormatter.format(200000 - 0.73 * thunhap )}đ';
-    } else if (caDangKiAdmin == '8h' && chuoiThoiGian.toDouble() >= 8.0 && thunhap < 438000 && tongDiemsm >= 12 && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
-      return '${currencyFormatter.format(320000 - 0.73 * thunhap  )}đ';
-    } else if (caDangKiAdmin == '10h' && chuoiThoiGian.toDouble() >= 10.0 && thunhap < 548000 && tongDiemsm >= 14 && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
-      return '${currencyFormatter.format(400000 - 0.73 * thunhap  )}đ';
+    if (caDangKiAdmin == '5h' && chuoiThoiGian.toDouble() >= 5.0 && thunhap < 200000 && tongDiemsm >= 5 && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
+      return '${currencyFormatter.format(200000 - thunhap)}đ';
+    } else if (caDangKiAdmin == '8h' && chuoiThoiGian.toDouble() >= 8.0 && thunhap < 320000 && tongDiemsm >= 8 && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
+      return '${currencyFormatter.format(320000 - thunhap)}đ';
+    } else if (caDangKiAdmin == '10h' && chuoiThoiGian.toDouble() >= 10.0 && thunhap < 400000 && tongDiemsm >= 10 && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90) {
+      return '${currencyFormatter.format(400000 - thunhap)}đ';
 
     } else {
       return 'Chưa đạt điều kiện !';
@@ -802,7 +729,7 @@ widget.initDataCallback();
 
                 decoration: InputDecoration(
                   hintStyle: hsMedium.copyWith(fontSize: 16, color: DailozColor.textgray),
-                  hintText: "Doanh thu chưa trừ chiết khấu : Ví dụ 100000đ",
+                  hintText: "Doanh thu Ví dụ : 100000",
 
                   suffixStyle: TextStyle(fontSize: 16, color: themedata.isdark?DailozColor.white:DailozColor.black),
                   border: UnderlineInputBorder(

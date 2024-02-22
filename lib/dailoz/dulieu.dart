@@ -81,6 +81,233 @@ class DatabaseHelper {
     )
   ''');
 
+
+
+
+    // Tạo bảng hanoi
+    await db.execute('''
+    CREATE TABLE hanoi (
+
+      h5hvuotmoc1 INTEGER,
+      h5hvuotmoc2 INTEGER,
+      h5hvuotmoc3 INTEGER,      
+      h5hvuotmoc4 INTEGER,   
+
+
+      h8hvuotmoc1 INTEGER,
+      h8hvuotmoc2 INTEGER,
+      h8hvuotmoc3 INTEGER,      
+      h8hvuotmoc4 INTEGER,   
+      
+      h10hvuotmoc1 INTEGER,
+      h10hvuotmoc2 INTEGER,
+      h10hvuotmoc3 INTEGER, 
+      h10hvuotmoc4 INTEGER,   
+           
+      thuongdiemtuan5h1 INTEGER,
+      thuongdiemtuan5h2 INTEGER,
+      thuongdiemtuan5h3 INTEGER,
+      thuongdiemtuan5h4 INTEGER,
+      thuongdiemtuan5h5 INTEGER,
+      thuongdiemtuan5h6 INTEGER,    
+      
+      thuongdiemtuan8h1 INTEGER,
+      thuongdiemtuan8h2 INTEGER,
+      thuongdiemtuan8h3 INTEGER,
+      thuongdiemtuan8h4 INTEGER,
+      thuongdiemtuan8h5 INTEGER,
+      thuongdiemtuan8h6 INTEGER,    
+      
+      thuongdiemtuan10h1 INTEGER,
+      thuongdiemtuan10h2 INTEGER,
+      thuongdiemtuan10h3 INTEGER,
+      thuongdiemtuan10h4 INTEGER,
+      thuongdiemtuan10h5 INTEGER,
+      thuongdiemtuan10h6 INTEGER,    
+
+      giocaodiem1 INTEGER,
+      giocaodiem2 INTEGER,
+      giocaodiem3 INTEGER,
+      giocaodiem4 INTEGER,
+      giocaodiem5 INTEGER,
+      giocaodiem6 INTEGER,  
+      testt INTEGER
+    )
+  ''');
+
+
+// Tạo bảng miennam
+    await db.execute('''
+    CREATE TABLE miennam (
+      h5hvuotmoc1 INTEGER,
+      h5hvuotmoc2 INTEGER,
+      h5hvuotmoc3 INTEGER,      
+      h5hvuotmoc4 INTEGER,   
+      
+      h8hvuotmoc1 INTEGER,
+      h8hvuotmoc2 INTEGER,
+      h8hvuotmoc3 INTEGER,      
+      h8hvuotmoc4 INTEGER, 
+      
+      h10hvuotmoc1 INTEGER,
+      h10hvuotmoc2 INTEGER,
+      h10hvuotmoc3 INTEGER, 
+       h10hvuotmoc4 INTEGER, 
+           
+      thuongdiemtuan5h1 INTEGER,
+      thuongdiemtuan5h2 INTEGER,
+      thuongdiemtuan5h3 INTEGER,
+      thuongdiemtuan5h4 INTEGER,
+      thuongdiemtuan5h5 INTEGER,
+      thuongdiemtuan5h6 INTEGER,    
+      
+      thuongdiemtuan8h1 INTEGER,
+      thuongdiemtuan8h2 INTEGER,
+      thuongdiemtuan8h3 INTEGER,
+      thuongdiemtuan8h4 INTEGER,
+      thuongdiemtuan8h5 INTEGER,
+      thuongdiemtuan8h6 INTEGER,    
+      
+      thuongdiemtuan10h1 INTEGER,
+      thuongdiemtuan10h2 INTEGER,
+      thuongdiemtuan10h3 INTEGER,
+      thuongdiemtuan10h4 INTEGER,
+      thuongdiemtuan10h5 INTEGER,
+      thuongdiemtuan10h6 INTEGER,    
+
+      giocaodiem1 INTEGER,
+      giocaodiem2 INTEGER,
+      giocaodiem3 INTEGER,
+      giocaodiem4 INTEGER,
+      giocaodiem5 INTEGER,
+      giocaodiem6 INTEGER,  
+      testt INTEGER
+    )
+  ''');
+
+
+    // Tạo bảng danang
+    await db.execute('''
+    CREATE TABLE danang (
+      h5hvuotmoc1 INTEGER,
+      h5hvuotmoc2 INTEGER,
+      h5hvuotmoc3 INTEGER,      
+      h5hvuotmoc4 INTEGER,   
+
+     h8hvuotmoc1 INTEGER,
+      h8hvuotmoc2 INTEGER,
+      h8hvuotmoc3 INTEGER,      
+       h8hvuotmoc4 INTEGER,  
+      h10hvuotmoc1 INTEGER,
+      h10hvuotmoc2 INTEGER,
+      h10hvuotmoc3 INTEGER, 
+           h10hvuotmoc4 INTEGER, 
+           
+      thuongdiemtuan5h1 INTEGER,
+      thuongdiemtuan5h2 INTEGER,
+      thuongdiemtuan5h3 INTEGER,
+      thuongdiemtuan5h4 INTEGER,
+      thuongdiemtuan5h5 INTEGER,
+      thuongdiemtuan5h6 INTEGER,    
+      
+      thuongdiemtuan8h1 INTEGER,
+      thuongdiemtuan8h2 INTEGER,
+      thuongdiemtuan8h3 INTEGER,
+      thuongdiemtuan8h4 INTEGER,
+      thuongdiemtuan8h5 INTEGER,
+      thuongdiemtuan8h6 INTEGER,    
+      
+      thuongdiemtuan10h1 INTEGER,
+      thuongdiemtuan10h2 INTEGER,
+      thuongdiemtuan10h3 INTEGER,
+      thuongdiemtuan10h4 INTEGER,
+      thuongdiemtuan10h5 INTEGER,
+      thuongdiemtuan10h6 INTEGER,    
+
+      giocaodiem1 INTEGER,
+      giocaodiem2 INTEGER,
+      giocaodiem3 INTEGER,
+      giocaodiem4 INTEGER,
+      giocaodiem5 INTEGER,
+      giocaodiem6 INTEGER,  
+      testt INTEGER
+    )
+  ''');
+
+
+
+    await db.insert(
+      'hanoi',
+      {
+        'h8hvuotmoc1': '14',
+        'h8hvuotmoc2': '10',
+        'h8hvuotmoc3': '3000',
+        'h8hvuotmoc4': '5000',
+
+
+        'h8hvuotmoc1': '18',
+        'h8hvuotmoc2': '14',
+        'h8hvuotmoc3': '5000',
+        'h8hvuotmoc4': '6000',
+        'h10hvuotmoc1': '22',
+        'h10hvuotmoc2': '18',
+        'h10hvuotmoc3': '6000',
+        'h10hvuotmoc4': '8000',
+
+      },
+    );
+
+
+
+
+    await db.insert(
+      'miennam',
+      {
+        'h5hvuotmoc1': '14',
+        'h5hvuotmoc2': '10',
+        'h5hvuotmoc3': '3000',
+        'h5hvuotmoc4': '5000',
+
+
+        'h8hvuotmoc1': '16',
+        'h8hvuotmoc2': '14',
+        'h8hvuotmoc3': '5000',
+        'h8hvuotmoc4': '6000',
+        'h10hvuotmoc1': '18',
+        'h10hvuotmoc2': '16',
+        'h10hvuotmoc3': '6000',
+        'h10hvuotmoc4': '8000',
+
+      },
+    );
+
+
+
+    await db.insert(
+      'danang',
+      {
+        'h5hvuotmoc1': '12',
+        'h5hvuotmoc2': '8',
+        'h5hvuotmoc3': '3000',
+        'h5hvuotmoc4': '5000',
+
+        'h8hvuotmoc1': '14',
+        'h8hvuotmoc2': '12',
+        'h8hvuotmoc3': '5000',
+        'h8hvuotmoc4': '6000',
+        'h10hvuotmoc1': '16',
+        'h10hvuotmoc2': '14',
+        'h10hvuotmoc3': '6000',
+        'h10hvuotmoc4': '8000',
+
+      },
+    );
+
+
+
+
+
+
     await db.insert(
       'nhiemvu',
       {
@@ -269,7 +496,7 @@ class DatabaseHelper {
     await db.execute('''
     CREATE TABLE yatoadmin (
       ca_dangkiadmin TEXT,
-        kichthuoc_font TEXT,
+      khuvuc TEXT,
       nhiemvutuan TEXT,
       keykichhoat TEXT
     
@@ -281,7 +508,7 @@ class DatabaseHelper {
         'ca_dangkiadmin': '10h',
         'keykichhoat': 'xanhsm',
         'nhiemvutuan': 'xanhsm',
-        'kichthuoc_font': '21.0',
+        'khuvuc': 'hanoi',
       },
     );
 
@@ -346,6 +573,40 @@ class DatabaseHelper {
   }
 
 
+  Future<List<Map<String, dynamic>>> getAllDataFromHanoiTable() async {
+    // Mở kết nối tới cơ sở dữ liệu
+    Database db = await DatabaseHelper().database;
+
+    // Sử dụng phương thức query để lấy tất cả dữ liệu từ bảng "hanoi"
+    List<Map<String, dynamic>> result = await db.query('hanoi');
+
+    // Trả về danh sách các bản ghi từ bảng "hanoi"
+    return result;
+  }
+
+
+  Future<List<Map<String, dynamic>>> getAllDataFromMiennamTable() async {
+    // Mở kết nối tới cơ sở dữ liệu
+    Database db = await DatabaseHelper().database;
+
+    // Sử dụng phương thức query để lấy tất cả dữ liệu từ bảng "hanoi"
+    List<Map<String, dynamic>> result = await db.query('miennam');
+
+    // Trả về danh sách các bản ghi từ bảng "hanoi"
+    return result;
+  }
+
+
+  Future<List<Map<String, dynamic>>> getAllDataFromdanangTable() async {
+    // Mở kết nối tới cơ sở dữ liệu
+    Database db = await DatabaseHelper().database;
+
+    // Sử dụng phương thức query để lấy tất cả dữ liệu từ bảng "hanoi"
+    List<Map<String, dynamic>> result = await db.query('danag');
+
+    // Trả về danh sách các bản ghi từ bảng "hanoi"
+    return result;
+  }
 
 
 
@@ -417,6 +678,14 @@ class DatabaseHelper {
     }
   }
 
+  Future<void> saveBoardInfo(String khuvuc, String caDangKi) async {
+    final Database db = await database;
+    await db.update(
+      'yatoadmin',
+      {'khuvuc': khuvuc, 'ca_dangkiadmin': caDangKi},
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
 
 
@@ -445,9 +714,10 @@ COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
 
         COALESCE(AVG(CAST(REPLACE(thoigian_hd, '%', '') AS INTEGER)), 0) as total_thoigian_hd,
       
-      
-            COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) as total_doanh_thungay,
+       COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) as total_doanh_thungay,
+            COALESCE(SUM(CAST(REPLACE(db_thunhap, '.', '') AS INTEGER)), 0) as total_db_thunhap,
             COALESCE(SUM(CAST(REPLACE(vuot_chuyen, '.', '') AS INTEGER)), 0) as total_vuot_chuyen,
+    COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) + COALESCE(SUM(CAST(REPLACE(db_thunhap, '.', '') AS INTEGER)), 0) + COALESCE(SUM(CAST(REPLACE(vuot_chuyen, '.', '') AS INTEGER)), 0) as total_sum,
 
  
       COALESCE(AVG(CAST(REPLACE(tilenhanchuyen, '%', '') AS INTEGER)), 0) as average_tilenhanchuyen,
