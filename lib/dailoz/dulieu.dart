@@ -647,6 +647,16 @@ class DatabaseHelper {
     return null;
   }
 
+
+  Future<String?> getCalkhuvuc() async {
+    final db = await database;
+    List<Map<String, dynamic>> result = await db.query('yatoadmin');
+    if (result.isNotEmpty) {
+      return result[0]['khuvuc'].toString();
+    }
+    return null;
+  }
+
   Future<void> updateCaDangKiAdmin(String caDangKi) async {
     Database db = await database;
     await db.update(
@@ -654,6 +664,15 @@ class DatabaseHelper {
       {'ca_dangkiadmin': caDangKi},
     );
   }
+
+  Future<void> capnhapkhuvuc(String caDangKi) async {
+    Database db = await database;
+    await db.update(
+      'yatoadmin',
+      {'khuvuc': caDangKi},
+    );
+  }
+
 
 
   Future<Map<String, dynamic>> fetchCaDangKiAdmin() async {

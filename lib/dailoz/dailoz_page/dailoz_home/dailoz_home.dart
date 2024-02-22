@@ -366,12 +366,36 @@ class _DailozhomeState extends State<Dailozhome> {
                         createBoard().then((result) {
                           if (result) {
                             // Hiển thị thông báo hoặc thực hiện các hành động sau khi lưu thông tin thành công
-                            print('Thông tin đã được lưu thành công!');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Thay đổi Thành công'),
+
+
+
+
+                              ),
+                            );
                           } else {
                             // Xử lý trường hợp lưu thông tin không thành công
-                            print('Đã xảy ra lỗi khi lưu thông tin!');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Thay đổi thất bại!'),
+
+
+
+
+                              ),
+                            );
                           }
                         });
+
+
+
+
+
+
+
+
                       },
                       child: Container(
                         height: height / 6,
@@ -464,8 +488,9 @@ class _DailozhomeState extends State<Dailozhome> {
                 SizedBox(height: height / 46),
                 CupertinoPicker(
                   itemExtent: 32.0,
-                  onSelectedItemChanged: (int index) {
+                  onSelectedItemChanged: (int index) async {
                     selectedKhuvuc = khuVucMapping.values.elementAt(index);
+                    await DatabaseHelper().saveBoardInfo(selectedKhuvuc, selectedCaDangKi);
                   },
                   children: khuVucMapping.keys.map((String key) {
                     return Center(
@@ -484,8 +509,9 @@ class _DailozhomeState extends State<Dailozhome> {
                 SizedBox(height: height / 46),
                 CupertinoPicker(
                   itemExtent: 32.0,
-                  onSelectedItemChanged: (int index) {
+                  onSelectedItemChanged: (int index) async {
                     selectedCaDangKi = caDangKiMapping.values.elementAt(index);
+                    await DatabaseHelper().saveBoardInfo(selectedKhuvuc, selectedCaDangKi);
                   },
                   children: caDangKiMapping.keys.map((String key) {
                     return Center(
@@ -527,6 +553,8 @@ class _DailozhomeState extends State<Dailozhome> {
                         onTap: () async {
                           await DatabaseHelper().saveBoardInfo(selectedKhuvuc, selectedCaDangKi);
                           Navigator.pop(context);
+
+
                         },
                         child: Container(
                           height: height / 20,

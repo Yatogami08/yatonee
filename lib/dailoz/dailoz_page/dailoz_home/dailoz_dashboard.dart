@@ -42,7 +42,7 @@ class _DailozDashboardState extends State<DailozDashboard> {
     _initPages();
     init();
     _fetchCaDangKiAdmin(); // Gọi hàm để cập nhật giá trị của khuvuc
-    khuvuc= "hanoi";
+
   }
   Future<void> _fetchCaDangKiAdmin() async {
     DatabaseHelper databaseHelper = DatabaseHelper();
@@ -57,7 +57,7 @@ class _DailozDashboardState extends State<DailozDashboard> {
       DailozTask(),
       if (khuvuc == "hanoi") hanoichitiet(onLeftArrowPressed: () {}, onRightArrowPressed: () {}),
       if (khuvuc == "miennam") miennamchitiet(onLeftArrowPressed: () {}, onRightArrowPressed: () {}),
-      if (khuvuc == "danang") dangnangchitiet(onLeftArrowPressed: () {}, onRightArrowPressed: () {}),
+      if (khuvuc == "danang")dangnangchitiet(onLeftArrowPressed: () {}, onRightArrowPressed: () {}),
       DailozProfile(),
     ];
   }

@@ -254,7 +254,7 @@ class _DailozProfileState extends State<DailozProfile> {
                     highlightColor: DailozColor.transparent,
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const DailozPrivate();
+                        return const khuvucdangki();
                       },));
                     },
                     child: Container(
@@ -281,8 +281,8 @@ class _DailozProfileState extends State<DailozProfile> {
                                 )
                             ),
                             SizedBox(height: height/56,),
-                            Text("Private".tr,style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
-                            Text("3 Task",style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
+                            Text("Khu vực".tr,style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
+                            Text("3 khu vực có sẵn",style: hsMedium.copyWith(fontSize: 14,color: DailozColor.black),),
                           ],
                         ),
                       ) ,
