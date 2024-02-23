@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_color.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_fontstyle.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_icons.dart';
@@ -8,7 +10,9 @@ import 'package:get/get.dart';
 
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
+import '../dailoz_profile/dailoz_personal.dart';
 import '../dailoz_profile/dailoz_private.dart';
+import '../dailoz_profile/dailoz_work.dart';
 import '../dailoz_task/dailoz_taskdetail.dart';
 import '../dailoz_task/lichsuitem.dart';
 import '../dailoz_task/themdulieu.dart';
@@ -32,30 +36,32 @@ String convertHourFormat(String input) {
 void _sortDataByDate() {
   lichSuItems.sort((a, b) => b.ngay.compareTo(a.ngay));
 }
-
+var rng = Random();
+int yatogamine = rng.nextInt(100) + 1;
 
 List<LichSuItem> lichSuItems = [];
 final DatabaseHelper dbHelper = DatabaseHelper();
 
 class _DailozhomeState extends State<Dailozhome> {
 
+
   @override
   void initState() {
     super.initState();
     _initData();
-  }
 
+  }
   void _initData() async {
+
+
     await dbHelper.initDatabase();
     List<Map<String, dynamic>> lichSuData = await dbHelper.getAllLichSu();
     setState(() {
       lichSuItems.clear();
       _sortDataByDate();
-
       int newestItemId = lichSuData.isNotEmpty
           ? lichSuData.reduce((a, b) => a['id'] > b['id'] ? a : b)['id']
           : 0;
-
       for (var i = 0; i < lichSuData.length; i++) {
         lichSuItems.add(LichSuItem(
           id: lichSuData[i]['id'],
@@ -96,6 +102,8 @@ class _DailozhomeState extends State<Dailozhome> {
   }
 
 
+  String yatogami = "cau"+yatogamine.toString();
+
   final themedata = Get.put(DailozThemecontroler());
   dynamic size;
   double height = 0.00;
@@ -115,16 +123,10 @@ class _DailozhomeState extends State<Dailozhome> {
               SizedBox(height: height/96,),
               Row(
                 children: [
-
-
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Xin Chào, Yatogami Tenka".tr, style: hsSemiBold.copyWith(fontSize: 26)),
-
-
-
                       FutureBuilder<String?>(
                         future: DatabaseHelper().getCaDangKiAdmin(),
                         builder: (context, snapshot) {
@@ -146,8 +148,6 @@ class _DailozhomeState extends State<Dailozhome> {
                           }
                         },
                       ),
-
-
                       FutureBuilder<String?>(
                         future: DatabaseHelper().getCaDangKiAdmin(),
                         builder: (context, snapshot) {
@@ -169,8 +169,6 @@ class _DailozhomeState extends State<Dailozhome> {
                           }
                         },
                       ),
-
-
                       FutureBuilder<String?>(
                         future: DatabaseHelper().getCaDangKiAdmin(),
                         builder: (context, snapshot) {
@@ -192,8 +190,6 @@ class _DailozhomeState extends State<Dailozhome> {
                           }
                         },
                       ),
-
-
                       FutureBuilder<String?>(
                         future: DatabaseHelper().getCaDangKiAdmin(),
                         builder: (context, snapshot) {
@@ -218,11 +214,10 @@ class _DailozhomeState extends State<Dailozhome> {
 
 
 
+
+
                     ],
                   ),
-
-
-
                   const Spacer(),
                   Container(
                     width: height/16,
@@ -241,11 +236,13 @@ class _DailozhomeState extends State<Dailozhome> {
 
 
 
-              SizedBox(height: height/36,),
-              Text("My_Task".tr,style: hsSemiBold.copyWith(fontSize: 24),),
-              SizedBox(height: height/36,),
 
 
+
+              SizedBox(height: height/36,),
+              Text("yatogamihome".tr,style: hsSemiBold.copyWith(fontSize: 24),),
+              Text(yatogami.tr,style: hsSemiBold.copyWith(fontSize: 14,color: DailozColor.tenka),),
+              SizedBox(height: height/36,),
               //11212
               Row(
                 children: [
@@ -260,9 +257,9 @@ class _DailozhomeState extends State<Dailozhome> {
                         );
                       },
                       child: Container(
-                        height: height / 6,
+                        height: height / 12,
                         width: height / 6, // Để tạo ô vuông
-                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
                           color: DailozColor.lightblue,
                           borderRadius: BorderRadius.circular(14),
@@ -270,25 +267,124 @@ class _DailozhomeState extends State<Dailozhome> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(DailozPngimage.iMac, height: height / 10, fit: BoxFit.fitHeight),
-
-                            Text(
-                              "test".tr,
-                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.black),
-                            ),
-                            SizedBox(height: 4),
-
+                            Image.asset(DailozPngimage.nhiemvungay, height: height / 12, fit: BoxFit.fitHeight),
                           ],
                         ),
                       ),
-
-
-
-
                     ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const DailozWork();
+                        },));
+                      },
+                      child: Container(
+                        height: height / 12,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.lightred,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.nhiemvuntuan, height: height / 12, fit: BoxFit.fitHeight),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DailozMyTask("Pending")),
+                        );
+                      },
+                      child: Container(
+                        height: height / 12,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.purple,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.dangphattrien, height: height / 12, fit: BoxFit.fitHeight),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return const khuvucdangki();
+                        },));
+                      },
+                      child: Container(
+                        height: height / 12,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.lightgreen,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.doikhuvuc, height: height / 12, fit: BoxFit.fitHeight),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
 
 
-
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DailozMyTask("Completed")),
+                        );
+                      },
+                      child: Container(
+                        height: height / 12,
+                        width: height / 6, // Để tạo ô vuông
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
+                        decoration: BoxDecoration(
+                          color: DailozColor.lightblue,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(DailozPngimage.dangphattrien, height: height / 12, fit: BoxFit.fitHeight),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: InkWell(
@@ -301,9 +397,9 @@ class _DailozhomeState extends State<Dailozhome> {
                         );
                       },
                       child: Container(
-                        height: height / 6,
+                        height: height / 12,
                         width: height / 6, // Để tạo ô vuông
-                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
                           color: DailozColor.lightred,
                           borderRadius: BorderRadius.circular(14),
@@ -311,14 +407,7 @@ class _DailozhomeState extends State<Dailozhome> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(DailozPngimage.iMac, height: height / 14, fit: BoxFit.fitHeight),
-                            SizedBox(height: 8), // Khoảng cách giữa các phần tử trong Column
-                            SizedBox(height: 8),
-                            Text(
-                              "test".tr,
-                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.white),
-                            ),
-
+                            Image.asset(DailozPngimage.tuychinhchinhsach, height: height / 12, fit: BoxFit.fitHeight),
                           ],
                         ),
                       ),
@@ -335,9 +424,9 @@ class _DailozhomeState extends State<Dailozhome> {
                         );
                       },
                       child: Container(
-                        height: height / 6,
+                        height: height / 12,
                         width: height / 6, // Để tạo ô vuông
-                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
                           color: DailozColor.purple,
                           borderRadius: BorderRadius.circular(14),
@@ -345,15 +434,7 @@ class _DailozhomeState extends State<Dailozhome> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(DailozPngimage.iMac, height: height / 14, fit: BoxFit.fitHeight),
-                            SizedBox(height: 8), // Khoảng cách giữa các phần tử trong Column
-                            SizedBox(height: 8),
-                            Text(
-                              "test".tr,
-                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.white),
-                            ),
-
-
+                            Image.asset(DailozPngimage.tuychinhthongtin, height: height / 12, fit: BoxFit.fitHeight),
                           ],
                         ),
                       ),
@@ -365,13 +446,13 @@ class _DailozhomeState extends State<Dailozhome> {
                       highlightColor: DailozColor.transparent,
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return const khuvucdangki();
+                          return const calamviec();
                         },));
                       },
                       child: Container(
-                        height: height / 6,
+                        height: height / 12,
                         width: height / 6, // Để tạo ô vuông
-                        margin: EdgeInsets.all(8), // Khoảng cách giữa các ô
+                        margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
                           color: DailozColor.lightgreen,
                           borderRadius: BorderRadius.circular(14),
@@ -379,20 +460,21 @@ class _DailozhomeState extends State<Dailozhome> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(DailozPngimage.iMac, height: height / 10, fit: BoxFit.fitHeight),
-
-                            Text(
-                              "Thiết Lập".tr,
-                              style: hsMedium.copyWith(fontSize: 16, color: DailozColor.black),
-                            ),
-                            SizedBox(height: 4),
-
-
+                            Image.asset(DailozPngimage.thaydoidaisu, height: height / 12, fit: BoxFit.fitHeight),
                           ],
                         ),
                       ),
                     ),
                   ),
+
+
+
+
+
+
+
+
+
                 ],
               ),
 
@@ -400,8 +482,7 @@ class _DailozhomeState extends State<Dailozhome> {
 
 
 
-
-              SizedBox(height: height/26,),
+    
           ],
           ),
         ),
@@ -409,6 +490,7 @@ class _DailozhomeState extends State<Dailozhome> {
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: DailozColor.appcolor,
+
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return themdulieu(
@@ -419,6 +501,14 @@ class _DailozhomeState extends State<Dailozhome> {
         },
         child: const Icon(Icons.add,size: 22,color: DailozColor.white,),
       ),
+
+
+
+
+
+
+
+
 
 
 

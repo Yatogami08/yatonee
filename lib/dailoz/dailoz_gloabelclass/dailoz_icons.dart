@@ -25,6 +25,16 @@ class DailozPngimage {
   static String setting = "assets/dailoz_assets/dailoz_pngimage/Setting.png";
   static String logout = "assets/dailoz_assets/dailoz_pngimage/Logout.png";
   static String splashh = "assets/dailoz_assets/dailoz_pngimage/splashh.png";
+  static String doikhuvuc = "assets/dailoz_assets/dailoz_pngimage/doikhuvuc.png";
+  static String dangphattrien = "assets/dailoz_assets/dailoz_pngimage/dangphattrien.png";
+  static String thaydoidaisu = "assets/dailoz_assets/dailoz_pngimage/thaydoidaisu.png";
+  static String tuychinhthongtin = "assets/dailoz_assets/dailoz_pngimage/tuychinhthongtin.png";
+
+
+  static String nhiemvungay = "assets/dailoz_assets/dailoz_pngimage/nhiemvungay.png";
+  static String nhiemvuntuan = "assets/dailoz_assets/dailoz_pngimage/nhiemvuntuan.png";
+  static String tuychinhchinhsach = "assets/dailoz_assets/dailoz_pngimage/tuychinhchinhsach.png";
+
 }
 
 class DailozSvgimage {

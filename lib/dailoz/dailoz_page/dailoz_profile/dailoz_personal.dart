@@ -8,14 +8,14 @@ import '../../dulieu.dart';
 import '../dailoz_task/dailoz_taskdetail.dart';
 import 'dailoz_addpersonal.dart';
 
-class DailozPersonal extends StatefulWidget {
-  const DailozPersonal({Key? key}) : super(key: key);
+class calamviec extends StatefulWidget {
+  const calamviec({Key? key}) : super(key: key);
 
   @override
-  State<DailozPersonal> createState() => _DailozPersonalState();
+  State<calamviec> createState() => _DailozPersonalState();
 }
 
-class _DailozPersonalState extends State<DailozPersonal> {
+class _DailozPersonalState extends State<calamviec> {
   dynamic size;
   double height = 0.00;
   double width = 0.00;

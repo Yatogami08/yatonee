@@ -147,7 +147,7 @@ class _DailozProfileState extends State<DailozProfile> {
                     highlightColor: DailozColor.transparent,
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const DailozPersonal();
+                        return const calamviec();
                       },));
                     },
                     child: Container(
