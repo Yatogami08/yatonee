@@ -7,6 +7,7 @@ import 'package:dailoz/dailoz/dailoz_page/dailoz_task/chitietlichsu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
@@ -440,6 +441,9 @@ class _DailozhomeState extends State<Dailozhome> {
                       ),
                     ),
                   ),
+
+
+
                   Expanded(
                     child: InkWell(
                       splashColor: DailozColor.transparent,
@@ -473,8 +477,30 @@ class _DailozhomeState extends State<Dailozhome> {
 
 
 
+                ],
+              ),
 
 
+
+
+              SizedBox(height: height/36,),
+
+
+              Row(
+                children: [
+                  // Code cho các ô vuông ở trên
+                  // ...
+
+                  // Container chứa WebView với kích thước ngang bằng với `Row` và chiều cao cố định
+                  Expanded(
+                    child: Container(
+                      height: height / 6, // Chiều cao mong muốn
+                      child: WebView(
+                        initialUrl: 'https://yatogami08.github.io/',
+                        javascriptMode: JavascriptMode.unrestricted,
+                      ),
+                    ),
+                  ),
                 ],
               ),
 
@@ -483,7 +509,10 @@ class _DailozhomeState extends State<Dailozhome> {
 
 
 
-          ],
+
+
+
+            ],
           ),
         ),
       ),
