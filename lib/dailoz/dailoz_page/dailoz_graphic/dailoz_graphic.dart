@@ -800,7 +800,7 @@ class _DailozTaskState extends State<miennamchitiet> {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                formatCurrency(dataForSelectedWeek?['total_doanh_thungay'].toString() ?? '')+"đ" ,
+                                thunhap(dataForSelectedWeek?['total_doanh_thungay'].toString() ?? '')+"đ" ,
                                 style: hsMedium.copyWith(fontSize: 18, color: DailozColor.tim),
                               ),
                             ),
@@ -866,9 +866,14 @@ class _DailozTaskState extends State<miennamchitiet> {
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                formatCurrency(dataForSelectedWeek?['total_sum'].toString() ?? '') + "đ",
+                                sumFormattedCurrency(
+                                  dataForSelectedWeek?['total_sum'].toString() ?? '',
+                                  (dataForSelectedWeek?['total_doanh_thungay'].toString() ?? ''),
+                                ) + "đ",
                                 style: hsMedium.copyWith(fontSize: 18, color: DailozColor.tim),
                               ),
+
+
                             ),
                           ],
                         ),
@@ -988,6 +993,35 @@ class _DailozTaskState extends State<miennamchitiet> {
 
 
   }
+
+  String sumFormattedCurrency(String value1, String value2) {
+    // Sử dụng NumberFormat để định dạng số thành chuỗi có dấu phẩy
+    final currencyFormat = NumberFormat('#,##0', 'vi_VN');
+
+    // Chuyển đổi chuỗi số thành số thực và cộng chúng lại với nhau
+    final double doubleValue1 = double.tryParse(value1) ?? 0;
+    final double doubleValue2 = (double.tryParse(value2) ?? 0) * 0.73;
+
+    final double sum = doubleValue1 + doubleValue2;
+
+    // Định dạng kết quả thành chuỗi với dấu phẩy
+    return currencyFormat.format(sum);
+  }
+
+
+
+  String thunhap(String value) {
+    // Sử dụng NumberFormat để định dạng số thành chuỗi có dấu phẩy
+    final currencyFormat = NumberFormat('#,##0', 'vi_VN');
+
+    // Chuyển đổi chuỗi số thành số thực và nhân với 0.73
+    final double doubleValue = (double.tryParse(value) ?? 0) * 0.73;
+
+    // Định dạng số thành chuỗi với dấu phẩy
+    return currencyFormat.format(doubleValue);
+  }
+
+
 
   String formatCurrency(String value) {
     // Sử dụng NumberFormat để định dạng số thành chuỗi có dấu phẩy

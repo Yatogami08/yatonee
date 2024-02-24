@@ -24,9 +24,9 @@ class _DailozPersonalState extends State<calamviec> {
   bool isCaDangKy = false;
 
   List<Color> itemColors = [
-    DailozColor.bgsky,
-    DailozColor.xanh,
-    DailozColor.tim,
+    DailozColor.bggray,
+    DailozColor.bggray,
+    DailozColor.bggray,
   ];
 
 
@@ -177,25 +177,26 @@ class _DailozPersonalState extends State<calamviec> {
                   String xanhsm = '';
                   if (index == 0) {
                     title = 'Đại sứ 5 Giờ';
-                    activity = 'Hoạt động 5 tiếng';
+                    activity = 'Hoạt động 5 tiếng để đạt chính sách thưởng';
                     colorLabel = 'xanh 5h';
                     neLabel = '5hne';
                     xanhsm = '5h';
                   } else if (index == 1) {
                     title = 'Đại sứ 8 Giờ';
-                    activity = 'Hoạt động 8 tiếng';
+                    activity = 'Hoạt động 8 tiếng để đạt chính sách thưởng';
                     colorLabel = 'xanh 8h';
                     neLabel = '8hne';
                     xanhsm = '8h';
                   } else if (index == 2) {
                     title = 'Đại sứ 10 Giờ';
-                    activity = 'Hoạt động 10 tiếng';
+                    activity = 'Hoạt động 10 tiếng để đạt chính sách thưởng';
                     colorLabel = 'xanh 10h';
                     neLabel = '10hne';
                     xanhsm = '10h';
                   }
                   // Kiểm tra xem title có trùng với ca_dangkiadmin không
                   if (xanhsm == ca_dangkiadmin) {
+
                     title = '$title - Đã đăng ký';
                   }
                   return InkWell(
@@ -239,7 +240,7 @@ class _DailozPersonalState extends State<calamviec> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 120),
-                                    child: Text(colorLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.purple)),
+                                    child: Text(colorLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.red)),
                                   ),
                                 ),
                                 SizedBox(width: width / 36),
@@ -250,7 +251,7 @@ class _DailozPersonalState extends State<calamviec> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 120),
-                                    child: Text(neLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.purple)),
+                                    child: Text(neLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.tim)),
                                   ),
                                 ),
                               ],

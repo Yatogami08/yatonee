@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -32,7 +37,7 @@ class DatabaseHelper {
         cd_toi INTEGER,
         don_thuong INTEGER,
         tong_chuyen INTEGER,
-        tong_diem INTEGER,
+        tong_diem NUMERIC,
         doanh_thungay TEXT,
         vuot_chuyen TEXT,
         db_thunhap TEXT,
@@ -708,6 +713,92 @@ class DatabaseHelper {
 
 
 
+
+
+  Future<void> restoreFromBackup(String backupFilePath, Database db) async {
+    try {
+      // Kiểm tra xem tệp sao lưu có tồn tại không
+      File backupFile = File(backupFilePath);
+      if (!(await backupFile.exists())) {
+        print('Không tìm thấy tệp sao lưu.');
+        return;
+      }
+
+      // Đọc dữ liệu từ tệp sao lưu
+      List<String> lines = await backupFile.readAsLines();
+
+      // Xóa dữ liệu hiện có trong bảng yatosm
+      await db.delete('yatosm');
+
+      // Bắt đầu batch để chèn dữ liệu một cách hiệu quả
+      var batch = db.batch();
+
+      // Chèn dữ liệu từ tệp sao lưu vào batch
+      for (String line in lines) {
+        List<String> parts = line.split(':');
+        if (parts.length == 2) {
+          String columnName = parts[0].trim();
+          String columnValue = parts[1].trim();
+
+          // Kiểm tra giá trị null
+          dynamic value = columnValue.isNotEmpty ? columnValue : null;
+
+          // Chèn truy vấn vào batch
+          batch.rawInsert(
+              'INSERT INTO yatosm ($columnName) VALUES (?)', [value]);
+        }
+      }
+
+      // Thực thi batch để chèn dữ liệu vào cơ sở dữ liệu
+      await batch.commit();
+
+      print('Dữ liệu đã được khôi phục từ: $backupFilePath');
+    } catch (e) {
+      print('Lỗi khi khôi phục dữ liệu từ backup: $e');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+  Future<void> backupYatosmData(Database db) async {
+    // Đường dẫn tuyệt đối đến thư mục yatogami
+    String yatogamiPath = '/storage/emulated/0/yatogami';
+
+    // Tạo thư mục yatogami nếu chưa tồn tại
+    Directory yatogamiDirectory = Directory(yatogamiPath);
+    if (!await yatogamiDirectory.exists()) {
+      await yatogamiDirectory.create(recursive: true);
+    }
+
+    // Tạo tên tệp dựa trên ngày tháng năm hiện tại
+    String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String backupFileName = '$yatogamiPath/$currentDate.db';
+
+    // Truy vấn dữ liệu từ bảng yatosm
+    List<Map<String, dynamic>> yatosmData = await db.query('yatosm');
+
+    // Ghi dữ liệu vào tệp sao lưu
+    File backupFile = File(backupFileName);
+    String contents = '';
+    yatosmData.forEach((row) {
+      row.forEach((key, value) {
+        contents += '$key: $value\n';
+      });
+      contents += '\n'; // Thêm dòng trống giữa các dòng dữ liệu
+    });
+    await backupFile.writeAsString(contents);
+
+    print('Dữ liệu đã được sao lưu vào: $backupFileName');
+  }
+
+
   Future<Map<String, dynamic>> fetchDataForWeek(DateTime startDate, DateTime endDate) async {
     Database db = await database;
     List<Map<String, dynamic>> result = await db.rawQuery('''
@@ -734,9 +825,11 @@ COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
         COALESCE(AVG(CAST(REPLACE(thoigian_hd, '%', '') AS INTEGER)), 0) as total_thoigian_hd,
       
        COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) as total_doanh_thungay,
+       
+       
             COALESCE(SUM(CAST(REPLACE(db_thunhap, '.', '') AS INTEGER)), 0) as total_db_thunhap,
             COALESCE(SUM(CAST(REPLACE(vuot_chuyen, '.', '') AS INTEGER)), 0) as total_vuot_chuyen,
-    COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) + COALESCE(SUM(CAST(REPLACE(db_thunhap, '.', '') AS INTEGER)), 0) + COALESCE(SUM(CAST(REPLACE(vuot_chuyen, '.', '') AS INTEGER)), 0) as total_sum,
+    COALESCE(SUM(CAST(REPLACE(db_thunhap, '.', '') AS INTEGER)), 0) + COALESCE(SUM(CAST(REPLACE(vuot_chuyen, '.', '') AS INTEGER)), 0) as total_sum,
 
  
       COALESCE(AVG(CAST(REPLACE(tilenhanchuyen, '%', '') AS INTEGER)), 0) as average_tilenhanchuyen,
@@ -761,45 +854,11 @@ COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
   }
 
 
-  Future<Map<String, dynamic>> fetchDataForWeek1(DateTime startDate, DateTime endDate) async {
-    Database db = await database;
-    List<Map<String, dynamic>> result = await db.rawQuery('''
-    SELECT 
-      COALESCE(SUM(cd_sang), 0) as total_cd_sang,
-      COALESCE(SUM(cd_toi), 0) as total_cd_toi,
-      COALESCE(SUM(don_thuong), 0) as total_don_thuong,
-      COALESCE(SUM(tong_chuyen), 0) as total_tong_chuyen,
-      COALESCE(SUM(tong_diem), 0) as total_tong_diem,
-      
-
-        COALESCE(AVG(CAST(REPLACE(thoigian_hd, '%', '') AS INTEGER)), 0) as total_thoigian_hd,
-      
-            COALESCE(SUM(CAST(REPLACE(doanh_thungay, '.', '') AS INTEGER)), 0) as total_doanh_thungay,
-
-        COALESCE(SUM(doanh_thungay), 0) as total_doanh_thungay,
- 
-      COALESCE(AVG(CAST(REPLACE(tilenhanchuyen, '%', '') AS INTEGER)), 0) as average_tilenhanchuyen,
-      COALESCE(AVG(CAST(REPLACE(tilehoanthanhchuyen, '%', '') AS INTEGER)), 0) as average_tilehoanthanhchuyen,
-      COALESCE(AVG(CAST(REPLACE(tilehuychuyen, '%', '') AS INTEGER)), 0) as average_tilehuychuyen,
-      COALESCE(yatoadmin.ca_dangkiadmin, '') as ca_dangkiadmin
-    FROM yatosm
-    LEFT JOIN yatoadmin ON 1=1  
-    WHERE 
-      DATE(ngay) >= DATE('${_formatDate(startDate)}')
-      AND DATE(ngay) <= DATE('${_formatDate(endDate)}')
-      AND tilenhanchuyen IS NOT NULL
-      AND tilehoanthanhchuyen IS NOT NULL
-      AND tilehuychuyen IS NOT NULL;
-  ''');
-
-    return result.isNotEmpty ? result.first : {};
-  }
 
 
   String _formatDate(DateTime date) {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
-
 
 
 

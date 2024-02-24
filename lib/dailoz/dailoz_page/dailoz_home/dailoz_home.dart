@@ -374,13 +374,13 @@ class _DailozhomeState extends State<Dailozhome> {
                         width: height / 6, // Để tạo ô vuông
                         margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
-                          color: DailozColor.lightblue,
+                          color: DailozColor.mau1,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(DailozPngimage.dangphattrien, height: height / 12, fit: BoxFit.fitHeight),
+                            Image.asset(DailozPngimage.saoluu, height: height / 12, fit: BoxFit.fitHeight),
                           ],
                         ),
                       ),
@@ -401,7 +401,7 @@ class _DailozhomeState extends State<Dailozhome> {
                         width: height / 6, // Để tạo ô vuông
                         margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
-                          color: DailozColor.lightred,
+                          color: DailozColor.mau2,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Column(
@@ -428,7 +428,7 @@ class _DailozhomeState extends State<Dailozhome> {
                         width: height / 6, // Để tạo ô vuông
                         margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
-                          color: DailozColor.purple,
+                          color: DailozColor.mau3,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Column(
@@ -454,7 +454,7 @@ class _DailozhomeState extends State<Dailozhome> {
                         width: height / 6, // Để tạo ô vuông
                         margin: EdgeInsets.all(5), // Khoảng cách giữa các ô
                         decoration: BoxDecoration(
-                          color: DailozColor.lightgreen,
+                          color: DailozColor.mau4,
                           borderRadius: BorderRadius.circular(14),
                         ),
                         child: Column(
@@ -482,7 +482,7 @@ class _DailozhomeState extends State<Dailozhome> {
 
 
 
-    
+
           ],
           ),
         ),

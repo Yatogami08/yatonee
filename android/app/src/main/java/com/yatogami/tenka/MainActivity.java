@@ -1,4 +1,4 @@
-package com.example.dailoz;
+package com.yatogami.tenka;
 
 import io.flutter.embedding.android.FlutterActivity;
 

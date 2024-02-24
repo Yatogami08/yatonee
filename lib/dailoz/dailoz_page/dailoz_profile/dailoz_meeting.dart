@@ -1,10 +1,12 @@
-import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_color.dart';
-import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_fontstyle.dart';
-import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_icons.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../dailoz_task/dailoz_taskdetail.dart';
-import 'dailoz_addpersonal.dart';
+import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sqflite/sqflite.dart';
+import '../../dailoz_gloabelclass/dailoz_color.dart';
+import '../../dailoz_gloabelclass/dailoz_fontstyle.dart';
+import '../../dulieu.dart';
+import '../dailoz_home/dailoz_home.dart';
 
 class DailozMeeting extends StatefulWidget {
   const DailozMeeting({Key? key}) : super(key: key);
@@ -14,9 +16,21 @@ class DailozMeeting extends StatefulWidget {
 }
 
 class _DailozMeetingState extends State<DailozMeeting> {
+  String yatogamiPath = '/storage/emulated/0/yatogami';
+  List<String> backups = []; // Danh sách lưu trữ các dữ liệu đã sao lưu
+
+  @override
+  void initState() {
+    super.initState();
+    String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String backupFileName = '$yatogamiPath/$currentDate.db';
+    backups.add(backupFileName); // Thêm tên tệp sao lưu vào danh sách
+  }
+
   dynamic size;
   double height = 0.00;
   double width = 0.00;
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -27,115 +41,76 @@ class _DailozMeetingState extends State<DailozMeeting> {
         leading: Padding(
           padding: const EdgeInsets.all(10),
           child: InkWell(
-            splashColor: DailozColor.transparent,
-            highlightColor: DailozColor.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
             onTap: () {
               Navigator.pop(context);
             },
             child: Container(
-              height: height/20,
-              width: height/20,
+              height: height / 20,
+              width: height / 20,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: DailozColor.white,
-                  boxShadow: const [
-                    BoxShadow(color: DailozColor.textgray,blurRadius: 5)
-                  ]
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(color: Colors.grey, blurRadius: 5),
+                ],
               ),
-              child: Padding(
-                padding: EdgeInsets.only(left: width/56),
-                child: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 18,
-                  color: DailozColor.black,
-                ),
+              child: const Icon(
+                Icons.arrow_back_ios,
+                size: 18,
+                color: Colors.black,
               ),
             ),
           ),
         ),
-        title:  Text("Meeting".tr,style: hsSemiBold.copyWith(fontSize: 18),),
+        title: const Text(
+          "Meeting",
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
+          padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 36),
           child: Column(
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: width/1.35,
-                    child: TextFormField(
-                        cursorColor: DailozColor.black,
-                        style: hsMedium.copyWith(fontSize: 16,color: DailozColor.textgray),
-                        decoration: InputDecoration(
-                          hintText: 'Search for task'.tr,
-                          filled: true,
-                          fillColor: DailozColor.bggray,
-                          prefixIcon: const Icon(
-                            Icons.search,
-                            size: 22,
-                            color: DailozColor.grey,
-                          ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Container(
-                              height: height/96,
-                              width: height/96,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: DailozColor.textgray
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                size: 12,
-                                color: DailozColor.white,
-                              ),
-                            ),
-                          ),
-                          hintStyle: hsMedium.copyWith(fontSize: 16,color: DailozColor.textgray),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none),
-                        )),
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    splashColor: DailozColor.transparent,
-                    highlightColor: DailozColor.transparent,
-                    onTap: () {
-                      // filter();
-                    },
-                    child: Container(
-                        height: height/13,
-                        width: height/13,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: DailozColor.bggray,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(13),
-                          child: Image.asset(DailozPngimage.filter,height: height/36,),
-                        )
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height/36,),
+              // Widget tìm kiếm và nút lọc
+              // ListView hiển thị các backup đã sao lưu
               ListView.builder(
-                itemCount: 3,
+                itemCount: backups.length,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                  String backupFile = backups[index];
                   return InkWell(
-                    splashColor: DailozColor.transparent,
-                    highlightColor: DailozColor.transparent,
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const DailozTaskdetail();
-                      },));
+                      // Xử lý khi người dùng nhấn vào một dữ liệu đã sao lưu
+                      // Ví dụ: Hiển thị thông báo cho người dùng
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Thông báo"),
+                            content: Text("Bạn đã chọn sao lưu: $backupFile"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Đóng"),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  // Xác nhận xóa và gọi hàm xóa backup
+                                  await deleteBackup(backupFile);
+                                  Navigator.pop(context); // Đóng AlertDialog sau khi xóa
+                                },
+                                child: Text("Xóa"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.only(bottom: height/46),
@@ -148,58 +123,146 @@ class _DailozMeetingState extends State<DailozMeeting> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Text("Cleaning Clothes",style: hsMedium.copyWith(fontSize: 16,color: DailozColor.black),),
-                                const Spacer(),
-                                Image.asset(DailozPngimage.dot,height: height/36,)
-                              ],
-                            ),
+                            Text("Backup $index", style: hsMedium.copyWith(fontSize: 16, color: DailozColor.black)),
                             SizedBox(height: height/200,),
-                            Text("07:00 - 07:15",style: hsRegular.copyWith(fontSize: 14,color: DailozColor.textgray),),
+                            Text(backupFile, style: hsRegular.copyWith(fontSize: 14, color: DailozColor.textgray)),
                             SizedBox(height: height/66,),
-                            Row(
-                              children: [
-                                Container(
-                                    decoration: BoxDecoration(
-                                        color: DailozColor.parrot,
-                                        borderRadius: BorderRadius.circular(5)
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/120),
-                                      child: Text("Urgent",style: hsMedium.copyWith(fontSize: 10,color: DailozColor.lightgreen),),
-                                    )),
-                                SizedBox(width: width/36,),
-                                Container(
-                                    decoration: BoxDecoration(
-                                        color: DailozColor.parrot,
-                                        borderRadius: BorderRadius.circular(5)
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/120),
-                                      child: Text("Home",style: hsMedium.copyWith(fontSize: 10,color: DailozColor.lightgreen),),
-                                    )),
-                              ],
+                            ElevatedButton(
+                              onPressed: () async {
+                                // Kiểm tra xem tệp sao lưu có tồn tại và có dữ liệu không
+                                bool backupExists = await doesBackupFileExist(backupFile);
+                                if (backupExists) {
+                                  // Khôi phục dữ liệu từ tệp sao lưu
+                                  Database db = await dbHelper.database;
+                                  if (await Permission.manageExternalStorage.request().isGranted) {
+                                    await dbHelper.restoreFromBackup(backupFile, db);
+                                    // Hiển thị thông báo hoặc cập nhật giao diện khi khôi phục thành công
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("Thông báo"),
+                                          content: Text("Dữ liệu đã được khôi phục từ: $backupFile"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("Đóng"),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    // Xử lý khi quyền truy cập bị từ chối
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("Thông báo"),
+                                          content: Text("Ứng dụng cần quyền truy cập để khôi phục dữ liệu."),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("Đóng"),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }
+                                } else {
+                                  // Xử lý khi không có dữ liệu để khôi phục
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text("Thông báo"),
+                                        content: Text("Không có dữ liệu để khôi phục."),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("Đóng"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                              child: Text("Khôi phục"),
                             ),
+
+
                           ],
                         ),
                       ),
                     ),
                   );
-                },)
+                },
+              )
+
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: DailozColor.appcolor,
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return DailozAddPersonal("metting");
-          },));
+        backgroundColor: Colors.blue,
+        onPressed: () async {
+          Database db = await dbHelper.database;
+          await requestPermission();
         },
-        child: const Icon(Icons.add,size: 22,color: DailozColor.white,),
+        child: const Icon(Icons.add, size: 22, color: Colors.white),
       ),
     );
+  }
+
+  Future<void> requestPermission() async {
+    if (await Permission.manageExternalStorage.request().isGranted) {
+      Database db = await dbHelper.database;
+      await dbHelper.backupYatosmData(db);
+    }
+  }
+
+  Future<bool> doesBackupFileExist(String filePath) async {
+    File backupFile = File(filePath);
+    return await backupFile.exists() && await backupFile.length() > 0;
+  }
+
+  // Hàm để cập nhật danh sách backup sau khi xóa file
+  Future<void> updateBackupList() async {
+    List<String> existingBackups = List.from(backups); // Tạo một bản sao của danh sách backup hiện tại
+    backups.clear(); // Xóa tất cả các backup hiện có
+    for (String backupFile in existingBackups) {
+      bool exists = await doesBackupFileExist(backupFile);
+      if (exists) {
+        backups.add(backupFile); // Thêm lại các backup còn tồn tại
+      }
+    }
+    setState(() {}); // Cập nhật giao diện
+  }
+
+  // Hàm xóa backup
+  Future<void> deleteBackup(String filePath) async {
+
+
+
+
+    if (await Permission.manageExternalStorage.request().isGranted) {
+      File backupFile = File(filePath);
+      await backupFile.delete(); // Xóa file backup
+      await updateBackupList(); // Cập nhật danh sách backup sau khi xóa
+    }
+
+
+
+
+
+
   }
 }

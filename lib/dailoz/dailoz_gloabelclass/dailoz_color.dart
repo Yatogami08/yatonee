@@ -9,6 +9,11 @@ class DailozColor{
   static const black = Colors.black;
   static const tenka = Colors.deepPurple;
 
+
+  static const mau1 = Colors.deepOrange;
+  static const mau2 = Colors.purpleAccent;
+  static const mau3 = Colors.tealAccent;
+  static const mau4 = Colors.limeAccent;
   static const yatogamineee = Color(897151255255);
 
 

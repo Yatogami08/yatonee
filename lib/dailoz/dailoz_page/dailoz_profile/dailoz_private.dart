@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_color.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_fontstyle.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_icons.dart';
@@ -24,9 +26,9 @@ class _DailozPersonalState extends State<khuvucdangki> {
   bool isCaDangKy = false;
 
   List<Color> itemColors = [
-    DailozColor.bgsky,
-    DailozColor.xanh,
-    DailozColor.tim,
+    DailozColor.bggray,
+    DailozColor.bggray,
+    DailozColor.bggray,
   ];
 
 
@@ -239,7 +241,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 120),
-                                    child: Text(colorLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.purple)),
+                                    child: Text(colorLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.red)),
                                   ),
                                 ),
                                 SizedBox(width: width / 36),
@@ -250,7 +252,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 120),
-                                    child: Text(neLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.purple)),
+                                    child: Text(neLabel, style: hsMedium.copyWith(fontSize: 10, color: DailozColor.tim)),
                                   ),
                                 ),
                               ],
@@ -282,7 +284,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Thông báo'),
-          content: Text('Bạn đã đăng ký ca này rồi.'),
+          content: Text('Bạn đã đăng ký Thành phố này rồi.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -304,17 +306,12 @@ class _DailozPersonalState extends State<khuvucdangki> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Xác nhận'),
-          content: Text('Bạn có chắc muốn đăng ký khu vực này không?'),
+          title: Text('Xác nhận đăng kí khu vực hoạt động'),
+          content: Text('Sau khi đăng kí thành công vui lòng bật lại ứng dụng'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-
-
-
-
-
 
               },
               child: Text('Hủy'),
@@ -329,6 +326,7 @@ class _DailozPersonalState extends State<khuvucdangki> {
 
                 // Đóng dialog
                 Navigator.of(context).pop();
+                exit(0);
               },
               child: Text('Đồng ý'),
             ),

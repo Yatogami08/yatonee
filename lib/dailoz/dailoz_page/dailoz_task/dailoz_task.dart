@@ -4,6 +4,7 @@ import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
 import '../dailoz_home/dailoz_home.dart';
@@ -250,7 +251,7 @@ class _DailozTaskState extends State<DailozTask> {
                                                 vertical: height / 120,
                                               ),
                                               child: Text(
-                                                "${lichSuItems[index].tongDiem.toDouble()} điểm",
+                                                "${lichSuItems[index].tongDiem.toString()} điểm",
                                                 style: hsMedium.copyWith(
                                                   fontSize: 10,
                                                   color: DailozColor.xanh,

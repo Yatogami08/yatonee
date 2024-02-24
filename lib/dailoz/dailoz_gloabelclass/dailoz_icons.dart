@@ -34,6 +34,10 @@ class DailozPngimage {
   static String nhiemvungay = "assets/dailoz_assets/dailoz_pngimage/nhiemvungay.png";
   static String nhiemvuntuan = "assets/dailoz_assets/dailoz_pngimage/nhiemvuntuan.png";
   static String tuychinhchinhsach = "assets/dailoz_assets/dailoz_pngimage/tuychinhchinhsach.png";
+  static String saoluu = "assets/dailoz_assets/dailoz_pngimage/saoluu.png";
+
+
+
 
 }
 

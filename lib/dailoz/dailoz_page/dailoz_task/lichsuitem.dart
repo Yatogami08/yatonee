@@ -6,7 +6,7 @@ class LichSuItem {
   final int cdToi;
   final int donThuong;
   final int tongChuyen;
-  final int tongDiem;
+  final num tongDiem;
   final String doanhThuNgay;
   final String vuotChuyen;
   final String dbThuNhap;
