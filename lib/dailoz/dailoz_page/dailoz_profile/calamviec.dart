@@ -277,28 +277,73 @@ class _DailozPersonalState extends State<calamviec> {
     );
   }
 
+
+
+
+
   Future<void> _showAlreadyRegisteredDialog(BuildContext context) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Thông báo'),
-          content: Text('Bạn đã đăng ký ca này rồi.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Xác nhận'),
-            ),
+
+
+    return await showDialog(
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width/56,vertical: height/96),
+              child: Column(
+                children: [
+                  Text("Thông báo".tr,style: hsSemiBold.copyWith(fontSize: 22)),
+                  SizedBox(height: height/56,),
+                  Text("Bạn đã đăng ký ca này rồi.".tr,textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,style: hsRegular.copyWith(fontSize: 16)),
+                  SizedBox(height: height/36,),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          splashColor: DailozColor.transparent,
+                          highlightColor: DailozColor.transparent,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: height/20,
+                            width: width/4,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: DailozColor.appcolor)
+                            ),
+                            child: Center(child: Text("Xác nhận".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.appcolor),)),
+                          ),
+                        ),
+                        SizedBox(width: width/36,),
+
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: height/56,),
+                ],
+              ),
+            )
           ],
-        );
-      },
-    );
+        ),
+        context: context);
   }
 
 
-  Future<void> _showConfirmationDialog(BuildContext context, String title) async {
+
+
+
+
+
+
+
+
+
+
+  Future<void> _showConfirmationDialog2(BuildContext context, String title) async {
     String caDangKi = getTitleAsCaDangKi(title);
 
     return showDialog<void>(
@@ -332,6 +377,92 @@ class _DailozPersonalState extends State<calamviec> {
       },
     );
   }
+
+
+
+
+  Future<void> _showConfirmationDialog(BuildContext context, String title) async {
+    String caDangKi = getTitleAsCaDangKi(title);
+
+    return await showDialog(
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width/56,vertical: height/96),
+              child: Column(
+                children: [
+                  Text("Thay đổi Đại sứ".tr,style: hsSemiBold.copyWith(fontSize: 22)),
+                  SizedBox(height: height/56,),
+                  Text("bạn có chắc chắn muốn đổi Đại sứ xanh này không ?".tr,textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,style: hsRegular.copyWith(fontSize: 16)),
+                  SizedBox(height: height/36,),
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          splashColor: DailozColor.transparent,
+                          highlightColor: DailozColor.transparent,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: height/20,
+                            width: width/4,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: DailozColor.appcolor)
+                            ),
+                            child: Center(child: Text("Cancel".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.appcolor),)),
+                          ),
+                        ),
+                        SizedBox(width: width/36,),
+                        Container(
+                          height: height / 20,
+                          width: width / 4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: DailozColor.appcolor,
+                          ),
+                          child: TextButton(
+                            onPressed: () async {
+                              // Thực hiện cập nhật giá trị ca_dangkiadmin trong yatoadmin
+                              _updateCaDangKiAdmin(caDangKi);
+
+                              // Load lại dữ liệu và cập nhật giao diện
+                              await _loadCaDangKiAdmin();
+
+                              // Đóng dialog
+                              Navigator.of(context).pop();
+                            },
+                            child: Center(
+                              child: Text(
+                                "Đồng ý".tr,
+                                style: hsRegular.copyWith(fontSize: 14, color: DailozColor.white),
+                              ),
+                            ),
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: height/56,),
+                ],
+              ),
+            )
+          ],
+        ),
+        context: context);
+  }
+
+
+
+
+
+
+
 
 
 

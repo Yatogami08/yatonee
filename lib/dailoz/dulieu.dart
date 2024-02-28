@@ -20,7 +20,7 @@ class DatabaseHelper {
     return _database!;
   }
   Future<Database> initDatabase() async {
-    String path = join(await getDatabasesPath(), 'your_database.db');
+    String path = join(await getDatabasesPath(), 'yatogami11.db');
     return openDatabase(
       path,
       version: 1,
@@ -68,23 +68,7 @@ class DatabaseHelper {
 
 
 
-    // Tạo bảng yatoadmin
-    await db.execute('''
-    CREATE TABLE nhiemvu (
- id INTEGER PRIMARY KEY AUTOINCREMENT,
-        ca_dangki TEXT,
-        muc TEXT,
-        diemthuong TEXT,
-        muocthuongvnd TEXT,
-        diemtrungbinh TEXT,
-        yato_1 TEXT,
-        yato_2 TEXT,
-        yato_3 TEXT,
-        yato_4 TEXT,
-        yato_5 TEXT
-    
-    )
-  ''');
+
 
 
 
@@ -244,10 +228,10 @@ class DatabaseHelper {
     await db.insert(
       'hanoi',
       {
-        'h8hvuotmoc1': '14',
-        'h8hvuotmoc2': '10',
-        'h8hvuotmoc3': '3000',
-        'h8hvuotmoc4': '5000',
+        'h5hvuotmoc1': '14',
+        'h5hvuotmoc2': '10',
+        'h5hvuotmoc3': '3000',
+        'h5hvuotmoc4': '5000',
 
 
         'h8hvuotmoc1': '18',
@@ -262,7 +246,15 @@ class DatabaseHelper {
       },
     );
 
-
+    await db.insert(
+      'hanoi',
+      {
+        'h5hvuotmoc1': '14',
+        'h5hvuotmoc2': '10',
+        'h5hvuotmoc3': '3000',
+        'h5hvuotmoc4': '5000',
+      },
+    );
 
 
     await db.insert(
@@ -313,75 +305,97 @@ class DatabaseHelper {
 
 
 
+
+
+    // Tạo bảng nhiemvuhn
+    await db.execute('''
+    CREATE TABLE nhiemvuhn (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ca_dangki TEXT,
+        muc TEXT,
+        diemthuong TEXT,
+        muocthuongvnd TEXT,
+        diemtrungbinh TEXT,
+        yato_1 TEXT,
+        yato_2 TEXT,
+        yato_3 TEXT,
+        yato_4 TEXT,
+        yato_5 TEXT
+    
+    )
+  ''');
+
+
+
+
+
+
+
+
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '5h',
         'muc': 'Mức 1',
-        'diemthuong': 'Từ 90 điểm tới 114 điểm',
+        'diemthuong': 'Từ 100 điểm tới 114 điểm',
         'muocthuongvnd': '200.000 VNĐ',
-        'diemtrungbinh': '13 điểm',
+        'diemtrungbinh': '15 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu5h1',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
 
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '5h',
         'muc': 'Mức 2',
         'diemthuong': 'Từ 115 điểm tới 134 điểm',
-        'muocthuongvnd': '300.000 VNĐ',
+        'muocthuongvnd': '250.000 VNĐ',
         'diemtrungbinh': '17 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu5h2',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
 
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '5h',
         'muc': 'Mức 3',
         'diemthuong': 'Từ 135 điểm trở lên',
-        'muocthuongvnd': '400.000 VNĐ',
+        'muocthuongvnd': '350.000 VNĐ',
         'diemtrungbinh': '20 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu5h3',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
-
-
-
-
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '8h',
         'muc': 'Mức 1',
-        'diemthuong': 'Từ 135 điểm tới 164 điểm',
-        'muocthuongvnd': '500.000 VNĐ',
+        'diemthuong': 'Từ 140 điểm tới 164 điểm',
+        'muocthuongvnd': '450.000 VNĐ',
         'diemtrungbinh': '20 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h1',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
-
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '8h',
         'muc': 'Mức 2',
@@ -390,107 +404,436 @@ class DatabaseHelper {
         'diemtrungbinh': '24 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h2',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
-
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '8h',
         'muc': 'Mức 3',
-        'diemthuong': 'Từ 195 điểm tới 224 điểm',
-        'muocthuongvnd': '700.000 VNĐ',
+        'diemthuong': 'Từ 195 điểm tới 229 điểm',
+        'muocthuongvnd': '800.000 VNĐ',
         'diemtrungbinh': '28 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h3',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
-
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '8h',
         'muc': 'Mức 4',
-        'diemthuong': 'Từ 225 điểm trở lên',
-        'muocthuongvnd': '1.100.000 VNĐ',
+        'diemthuong': 'Từ 230 điểm trở lên',
+        'muocthuongvnd': '1.200.000 VNĐ',
         'diemtrungbinh': '33 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h4',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
-
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhn',
       {
         'ca_dangki': '10h',
         'muc': 'Mức 1',
-        'diemthuong': 'Từ 135 điểm tới 164 điểm',
+        'diemthuong': 'Từ 150 điểm tới 179 điểm',
         'muocthuongvnd': '500.000 VNĐ',
-        'diemtrungbinh': '20 điểm',
+        'diemtrungbinh': '22 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h1',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvuhn',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 2',
+        'diemthuong': 'Từ 180 điểm tới 214 điểm',
+        'muocthuongvnd': '700.000 VNĐ',
+        'diemtrungbinh': '26 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvuhn',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 3',
+        'diemthuong': 'Từ 215 điểm tới 259 điểm',
+        'muocthuongvnd': '1.000.000 VNĐ',
+        'diemtrungbinh': '31 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h3',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvuhn',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 4 - Idol ~',
+        'diemthuong': 'Từ 260 điểm trở lên',
+        'muocthuongvnd': '1.500.000 VNĐ',
+        'diemtrungbinh': '38 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h4',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+
+
+
+
+
+
+
+
+
+
+    // Tạo bảng nhiemvuhn
+    await db.execute('''
+    CREATE TABLE nhiemvuhcm (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ca_dangki TEXT,
+        muc TEXT,
+        diemthuong TEXT,
+        muocthuongvnd TEXT,
+        diemtrungbinh TEXT,
+        yato_1 TEXT,
+        yato_2 TEXT,
+        yato_3 TEXT,
+        yato_4 TEXT,
+        yato_5 TEXT
+    
+    )
+  ''');
+
+
+    await db.insert(
+      'nhiemvuhcm',
+      {
+        'ca_dangki': '5h',
+        'muc': 'Mức 1',
+        'diemthuong': 'Từ 100 điểm tới 114 điểm',
+        'muocthuongvnd': '200.000 VNĐ',
+        'diemtrungbinh': '15 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu5h1',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
 
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhcm',
       {
-        'ca_dangki': '10h',
+        'ca_dangki': '5h',
+        'muc': 'Mức 2',
+        'diemthuong': 'Từ 115 điểm tới 134 điểm',
+        'muocthuongvnd': '250.000 VNĐ',
+        'diemtrungbinh': '17 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu5h2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+    await db.insert(
+      'nhiemvuhcm',
+      {
+        'ca_dangki': '5h',
+        'muc': 'Mức 3',
+        'diemthuong': 'Từ 135 điểm trở lên',
+        'muocthuongvnd': '350.000 VNĐ',
+        'diemtrungbinh': '20 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu5h3',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvuhcm',
+      {
+        'ca_dangki': '8h',
+        'muc': 'Mức 1',
+        'diemthuong': 'Từ 140 điểm tới 164 điểm',
+        'muocthuongvnd': '450.000 VNĐ',
+        'diemtrungbinh': '20 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h1',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvuhcm',
+      {
+        'ca_dangki': '8h',
         'muc': 'Mức 2',
         'diemthuong': 'Từ 165 điểm tới 194 điểm',
         'muocthuongvnd': '600.000 VNĐ',
         'diemtrungbinh': '24 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h2',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
-
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhcm',
       {
-        'ca_dangki': '10h',
+        'ca_dangki': '8h',
         'muc': 'Mức 3',
-        'diemthuong': 'Từ 195 điểm tới 224 điểm',
-        'muocthuongvnd': '700.000 VNĐ',
+        'diemthuong': 'Từ 195 điểm trở lên',
+        'muocthuongvnd': '800.000 VNĐ',
         'diemtrungbinh': '28 điểm',
         'yato_1': 'tuan',
         'yato_2': 'nhiemvu8h3',
-        'yato_3': 'test2',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
 
     await db.insert(
-      'nhiemvu',
+      'nhiemvuhcm',
       {
         'ca_dangki': '10h',
-        'muc': 'Mức 4',
-        'diemthuong': 'Từ 225 điểm trở lên',
-        'muocthuongvnd': '1.100.000 VNĐ',
-        'diemtrungbinh': '33 điểm',
+        'muc': 'Mức 1',
+        'diemthuong': 'Từ 150 điểm tới 179 điểm',
+        'muocthuongvnd': '500.000 VNĐ',
+        'diemtrungbinh': '22 điểm',
         'yato_1': 'tuan',
-        'yato_2': 'nhiemvu8h4',
-        'yato_3': 'test2',
+        'yato_2': 'nhiemvu8h1',
+        'yato_3': 'chuadangki',
         'yato_4': 'test3',
         'yato_5': 'test4',
       },
     );
+    await db.insert(
+      'nhiemvuhcm',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 2',
+        'diemthuong': 'Từ 180 điểm tới 214 điểm',
+        'muocthuongvnd': '700.000 VNĐ',
+        'diemtrungbinh': '26 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvuhcm',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 3',
+        'diemthuong': 'Từ 215 điểm trở lên',
+        'muocthuongvnd': '1.000.000 VNĐ',
+        'diemtrungbinh': '31 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h3',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+
+
+
+
+
+    // Tạo bảng nhiemvuhn
+    await db.execute('''
+    CREATE TABLE nhiemvudanang (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ca_dangki TEXT,
+        muc TEXT,
+        diemthuong TEXT,
+        muocthuongvnd TEXT,
+        diemtrungbinh TEXT,
+        yato_1 TEXT,
+        yato_2 TEXT,
+        yato_3 TEXT,
+        yato_4 TEXT,
+        yato_5 TEXT
+    
+    )
+  ''');
+
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '5h',
+        'muc': 'Mức 1',
+        'diemthuong': 'Từ 100 điểm tới 114 điểm',
+        'muocthuongvnd': '200.000 VNĐ',
+        'diemtrungbinh': '15 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu5h1',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '5h',
+        'muc': 'Mức 2',
+        'diemthuong': 'Từ 115 điểm tới 134 điểm',
+        'muocthuongvnd': '250.000 VNĐ',
+        'diemtrungbinh': '17 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu5h2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '5h',
+        'muc': 'Mức 3',
+        'diemthuong': 'Từ 135 điểm trở lên',
+        'muocthuongvnd': '350.000 VNĐ',
+        'diemtrungbinh': '20 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu5h3',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '8h',
+        'muc': 'Mức 1',
+        'diemthuong': 'Từ 135 điểm tới 144 điểm',
+        'muocthuongvnd': '350.000 VNĐ',
+        'diemtrungbinh': '20 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h1',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '8h',
+        'muc': 'Mức 2',
+        'diemthuong': 'Từ 145 điểm tới 159 điểm',
+        'muocthuongvnd': '400.000 VNĐ',
+        'diemtrungbinh': '21 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '8h',
+        'muc': 'Mức 3',
+        'diemthuong': 'Từ 160 điểm trở lên',
+        'muocthuongvnd': '500.000 VNĐ',
+        'diemtrungbinh': '23 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h3',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 1',
+        'diemthuong': 'Từ 135 điểm tới 144 điểm',
+        'muocthuongvnd': '350.000 VNĐ',
+        'diemtrungbinh': '20 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h1',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 2',
+        'diemthuong': 'Từ 145 điểm tới 159 điểm',
+        'muocthuongvnd': '400.000 VNĐ',
+        'diemtrungbinh': '21 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h2',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+    await db.insert(
+      'nhiemvudanang',
+      {
+        'ca_dangki': '10h',
+        'muc': 'Mức 3',
+        'diemthuong': 'Từ 160 điểm trở lên',
+        'muocthuongvnd': '500.000 VNĐ',
+        'diemtrungbinh': '23 điểm',
+        'yato_1': 'tuan',
+        'yato_2': 'nhiemvu8h3',
+        'yato_3': 'chuadangki',
+        'yato_4': 'test3',
+        'yato_5': 'test4',
+      },
+    );
+
+
+
+
+
 
 
 
@@ -503,6 +846,14 @@ class DatabaseHelper {
       ca_dangkiadmin TEXT,
       khuvuc TEXT,
       nhiemvutuan TEXT,
+      yatogami1 TEXT,
+      yatogami2 TEXT,
+      yatogami3 TEXT,
+      yatogami4 TEXT,
+      yatogami5 TEXT,
+      yatogami6 TEXT,
+      yatogami7 TEXT,
+      yatogami8 TEXT,
       keykichhoat TEXT
     
     )
@@ -526,7 +877,7 @@ class DatabaseHelper {
   Future<int> countNhiemVuData(String caDangKiAdmin) async {
     final db = await database;
     return Sqflite.firstIntValue(await db.rawQuery(
-      'SELECT COUNT(*) FROM nhiemvu WHERE ca_dangki = ?',
+      'SELECT COUNT(*) FROM nhiemvuhn WHERE ca_dangki = ?',
       [caDangKiAdmin],
     )) ?? 0;
   }
@@ -545,28 +896,54 @@ class DatabaseHelper {
   }
 
 
-  Future<Map<String, dynamic>> getNhiemVuData(int index) async {
-    final db = await database;
+    Future<Map<String, dynamic>> laydulieunhiemvuhanoi(int index) async {
+      final db = await database;
 
-    // Lấy giá trị ca_dangkiadmin từ bảng yatoadmin
-    String? caDangKiAdmin = await DatabaseHelper().getCaDangKiAdmin();
+      // Lấy giá trị ca_dangkiadmin từ bảng yatoadmin
+      String? caDangKiAdmin = await DatabaseHelper().getCaDangKiAdmin();
+      String? getCalkhuvuc = await DatabaseHelper().getCalkhuvuc();
 
-    List<Map<String, dynamic>> result = await db.query(
-      'nhiemvu',
-      where: 'ca_dangki = ?', // Lọc dữ liệu theo trường ca_dangki
-      whereArgs: [caDangKiAdmin], // Giá trị ca_dangkiadmin từ bảng yatoadmin
-      orderBy: 'id ASC', // Sắp xếp theo id tăng dần
-      limit: 4, // Lấy 4 bản ghi gần đây nhất
-      offset: index, // Bắt đầu từ vị trí chỉ định
-    );
 
-    if (result.isNotEmpty) {
-      return result[0];
-    } else {
-      return {}; // Trả về một Map rỗng nếu không có dữ liệu
+      String tableName = '';
+      if (getCalkhuvuc == 'hanoi') {
+        tableName = 'nhiemvuhn'; // Tên bảng tương ứng với Hà Nội
+      } else if (getCalkhuvuc == 'miennam') {
+        tableName = 'nhiemvuhcm'; // Tên bảng tương ứng với Miền Nam
+      } else if (getCalkhuvuc == 'danang') {
+        tableName = 'nhiemvudanang'; // Tên bảng tương ứng với Đà Nẵng
+      }
+
+
+      List<Map<String, dynamic>> result = await db.query(
+        tableName,
+        where: 'ca_dangki = ?', // Lọc dữ liệu theo trường ca_dangki
+        whereArgs: [caDangKiAdmin], // Giá trị ca_dangkiadmin từ bảng yatoadmin
+        orderBy: 'id ASC', // Sắp xếp theo id tăng dần
+        limit: 4, // Lấy 4 bản ghi gần đây nhất
+        offset: index, // Bắt đầu từ vị trí chỉ định
+      );
+
+      if (result.isNotEmpty) {
+        return result[0];
+      } else {
+        return {}; // Trả về một Map rỗng nếu không có dữ liệu
+      }
     }
-  }
 
+
+
+
+
+
+  Future<void> capNhatYato3(int id, String newValue) async {
+    final db = await database;
+    await db.update(
+      'nhiemvuhn',
+      {'yato_3': newValue},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 
 
 
@@ -861,8 +1238,15 @@ COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
   }
 
 
-
-
+  Future<int> laySoluongNhiemvu(String caDangKi) async {
+    Database db = await database;
+    List<Map<String, dynamic>> nhiemvu = await db.query(
+      'nhiemvuhn',
+      where: 'ca_dangki = ?',
+      whereArgs: [caDangKi],
+    );
+    return nhiemvu.length;
+  }
 
 }
 

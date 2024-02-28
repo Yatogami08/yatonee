@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
+import '../dailoz_Authentication/dailoz_login.dart';
 import 'dailoz_event.dart';
 import 'dailoz_meeting.dart';
-import 'dailoz_personal.dart';
-import 'dailoz_private.dart';
+import 'calamviec.dart';
+import 'khuvucdangki.dart';
 import 'dailoz_setting.dart';
-import 'dailoz_work.dart';
+import 'nhiemvutuan.dart';
 
 class DailozProfile extends StatefulWidget {
   const DailozProfile({Key? key}) : super(key: key);
@@ -188,7 +189,7 @@ class _DailozProfileState extends State<DailozProfile> {
                     highlightColor: DailozColor.transparent,
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const DailozWork();
+                        return const nhiemvutuan();
                       },));
                     },
                     child: Container(
@@ -445,6 +446,8 @@ class _DailozProfileState extends State<DailozProfile> {
                           splashColor: DailozColor.transparent,
                           highlightColor: DailozColor.transparent,
                           onTap: () {
+
+
                             Navigator.pop(context);
                           },
                           child: Container(
@@ -458,7 +461,16 @@ class _DailozProfileState extends State<DailozProfile> {
                           ),
                         ),
                         SizedBox(width: width/36,),
-                        Container(
+
+                    InkWell(
+                        splashColor: DailozColor.transparent,
+                        highlightColor: DailozColor.transparent,
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const DailozLogin();
+                          },));
+                        },
+                      child:   Container(
                           height: height/20,
                           width: width/4,
                           decoration: BoxDecoration(
@@ -467,6 +479,11 @@ class _DailozProfileState extends State<DailozProfile> {
                           ),
                           child: Center(child: Text("Sure".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.white),)),
                         )
+
+                    ),
+
+
+
                       ],
                     ),
                   ),
@@ -478,6 +495,8 @@ class _DailozProfileState extends State<DailozProfile> {
         ),
         context: context);
   }
+
+
 
   Future<bool> createBoard() async {
     return await showDialog(

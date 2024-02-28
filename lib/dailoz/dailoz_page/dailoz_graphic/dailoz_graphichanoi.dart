@@ -52,7 +52,18 @@ class _DailozTaskState extends State<hanoichitiet> {
     DateTime startDate = DateTime.now().subtract(Duration(days: 30));
     selectedDate = DateTime.now();
     isselected = 30;
+    _loadCaDangKiAdmin();
+  }
 
+  String yatogami = '';
+
+  Future<void> _loadCaDangKiAdmin() async {
+    String? caDangKiAdmin = await DatabaseHelper().getCaDangKiAdmin();
+    if (caDangKiAdmin != null) {
+      setState(() {
+        yatogami = caDangKiAdmin;
+      });
+    }
   }
 
 
@@ -723,22 +734,31 @@ class _DailozTaskState extends State<hanoichitiet> {
                     mainAxisAlignment: MainAxisAlignment.center, // Đặt giá trị MainAxisAlignment.center ở đây
                     children: [
                       Container(
-                        margin: EdgeInsets.only(right: width/36),
-                        height: height/22,
+                        margin: EdgeInsets.only(right: width / 36),
+                        height: height / 22,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: DailozColor.bgred,
                         ),
                         child: Center(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/20),
+                            padding: EdgeInsets.symmetric(horizontal: width / 20),
                             child: Text(
-                             "Thưởng Vượt Chuyến + Thưởng cao điểm : "+  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ??   '') + " và "+ formatCurrency(dataForSelectedWeek?['total_cd_sang_toi_sum'].toString() ?? '') +"đ",
-                              style: hsRegular.copyWith(fontSize: 14,color: DailozColor.tim),
+                              yatogami == "5h"
+                                  ? "Thưởng Vượt Chuyến + Thưởng cao điểm : " +
+                                  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ?? '') +
+                                  " và " +
+                                  formatCurrency(dataForSelectedWeek?['total_cd_sang_toi_sum'].toString() ?? '') +
+                                  "đ"
+                                  : "Thưởng Vượt Chuyến : " +
+                                  formatCurrency(dataForSelectedWeek?['total_vuot_chuyen'].toString() ?? '') +
+                                  "đ",
+                              style: hsRegular.copyWith(fontSize: 14, color: DailozColor.tim),
                             ),
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),

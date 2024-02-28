@@ -19,7 +19,10 @@ class DailozColor{
 
   static const transparent = Colors.transparent;
   static const appgray = Color(0xffA7A9B7);
-  static const appcolor = Color(0xff5B67CA);
+  static const appcolormacdinh = Color(0xff5B67CA);
+  static const appcolor = Color(0xFF651FFF);
+
+
   static const textgray = Color(0xffC6CEDD);
   static const greyy = Color(0xffF0F3FA);
   static const bggray = Color(0xffF6F6F6);

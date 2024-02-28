@@ -5,15 +5,18 @@ import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_fontstyle.dart';
 import 'package:dailoz/dailoz/dailoz_gloabelclass/dailoz_icons.dart';
 import 'package:dailoz/dailoz/dailoz_page/dailoz_task/chitietlichsu.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../dailoz_theme/dailoz_themecontroller.dart';
 import '../../dulieu.dart';
-import '../dailoz_profile/dailoz_personal.dart';
-import '../dailoz_profile/dailoz_private.dart';
-import '../dailoz_profile/dailoz_work.dart';
+import '../dailoz_profile/calamviec.dart';
+import '../dailoz_profile/khuvucdangki.dart';
+
+import '../dailoz_profile/nhiemvutuan.dart';
 import '../dailoz_task/dailoz_taskdetail.dart';
 import '../dailoz_task/lichsuitem.dart';
 import '../dailoz_task/themdulieu.dart';
@@ -34,6 +37,25 @@ String convertHourFormat(String input) {
   }
 }
 
+double _currentSliderValue = 20;
+
+
+
+String khuvucnehihi(String khuvucne) {
+  switch (khuvucne) {
+    case 'hanoi':
+      return 'Hà Nội';
+    case 'danang':
+      return 'Đà Nẵng';
+    case 'miennam':
+      return 'Hồ Chí Minh,Bình Dương,Đồng Nai';
+    default:
+      return '';
+  }
+}
+
+
+
 void _sortDataByDate() {
   lichSuItems.sort((a, b) => b.ngay.compareTo(a.ngay));
 }
@@ -44,6 +66,8 @@ List<LichSuItem> lichSuItems = [];
 final DatabaseHelper dbHelper = DatabaseHelper();
 
 class _DailozhomeState extends State<Dailozhome> {
+
+
 
 
   @override
@@ -149,14 +173,17 @@ class _DailozhomeState extends State<Dailozhome> {
                           }
                         },
                       ),
+
+
+
                       FutureBuilder<String?>(
-                        future: DatabaseHelper().getCaDangKiAdmin(),
+                        future: DatabaseHelper().getCalkhuvuc(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.done) {
                             if (snapshot.hasData) {
-                              String formattedHour = convertHourFormat(snapshot.data!);
+                              String khuvucne = khuvucnehihi(snapshot.data!);
                               return Text(
-                                "Nhiệm vụ Tuần : coming soon",
+                                "khu vực hiện tại : $khuvucne",
                                 style: hsRegular.copyWith(fontSize: 14),
                               );
                             } else {
@@ -170,15 +197,32 @@ class _DailozhomeState extends State<Dailozhome> {
                           }
                         },
                       ),
+
+
+
+
+
+
+
+
+
                       FutureBuilder<String?>(
                         future: DatabaseHelper().getCaDangKiAdmin(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.done) {
                             if (snapshot.hasData) {
                               String formattedHour = convertHourFormat(snapshot.data!);
-                              return Text(
-                                "Nhiệm vụ ngày : coming soon",
-                                style: hsRegular.copyWith(fontSize: 14),
+                              double maxValue = 100;
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Nhiệm vụ Tuần:",
+                                    style: hsRegular.copyWith(fontSize: 14),
+                                  ),
+
+                                ],
                               );
                             } else {
                               return Text(
@@ -191,6 +235,9 @@ class _DailozhomeState extends State<Dailozhome> {
                           }
                         },
                       ),
+
+
+
                       FutureBuilder<String?>(
                         future: DatabaseHelper().getCaDangKiAdmin(),
                         builder: (context, snapshot) {
@@ -280,7 +327,7 @@ class _DailozhomeState extends State<Dailozhome> {
                       highlightColor: DailozColor.transparent,
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return const DailozWork();
+                          return const nhiemvutuan();
                         },));
                       },
                       child: Container(
@@ -472,32 +519,25 @@ class _DailozhomeState extends State<Dailozhome> {
                   ),
 
 
-
-
-
-
-
                 ],
               ),
 
 
 
-
-              SizedBox(height: height/36,),
-
-
               Row(
                 children: [
-                  // Code cho các ô vuông ở trên
-                  // ...
-
-                  // Container chứa WebView với kích thước ngang bằng với `Row` và chiều cao cố định
                   Expanded(
                     child: Container(
-                      height: height / 6, // Chiều cao mong muốn
+                      height: height / 4,
                       child: WebView(
                         initialUrl: 'https://yatogami08.github.io/',
                         javascriptMode: JavascriptMode.unrestricted,
+                        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                          Factory<HorizontalDragGestureRecognizer>(
+                                () => HorizontalDragGestureRecognizer()
+                              ..onUpdate = (_) {},
+                          ),
+                        },
                       ),
                     ),
                   ),

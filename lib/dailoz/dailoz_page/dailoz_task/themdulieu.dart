@@ -879,29 +879,28 @@ widget.initDataCallback();
 
 
               SizedBox(
-                height: height/21,
+                height: height / 21,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, // Đặt giá trị MainAxisAlignment.center ở đây
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: width/36),
-                      height: height/22,
+                      margin: EdgeInsets.only(right: width / 36),
+                      height: height / 22,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: DailozColor.bgred,
                       ),
                       child: Center(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width/20),
+                          padding: EdgeInsets.symmetric(horizontal: width / 20),
                           child: Text(
-                            "Đảm bảo thu nhập: ${_calculateGuaranteedIncome()}",
-
-
-
-
-
-
-                            style: hsRegular.copyWith(fontSize: 14,color: DailozColor.yatogamineee),
+                            (khuvuc == "danang" || khuvuc == "miennam")
+                                ? "Đảm bảo thu nhập: ${_calculateGuaranteedIncome()}"
+                                : "", // Nếu không phải Hà Nội hoặc Miền Nam, hiển thị chuỗi trống
+                            style: hsRegular.copyWith(
+                              fontSize: 14,
+                              color: DailozColor.yatogamineee,
+                            ),
                           ),
                         ),
                       ),
