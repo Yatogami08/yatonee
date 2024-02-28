@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_file.dart';
-import 'dailoz/dailoz_page/dailoz_Authentication/dailoz_splashscreen.dart';
-import 'dailoz/dailoz_theme/dailoz_theme.dart';
-import 'dailoz/dailoz_theme/dailoz_themecontroller.dart';
-import 'dailoz/dailoz_translation/stringtranslation.dart';
+import 'dailoz/yatogami_page/yatogami_Authentication/yatogami__splashscreen.dart';
+import 'dailoz/yatogami_theme/yatogami_theme.dart';
+import 'dailoz/yatogami_theme/yatogami_themecontroller.dart';
+import 'dailoz/yatogami_translation/stringtranslation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
