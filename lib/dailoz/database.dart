@@ -1237,6 +1237,9 @@ class DatabaseHelper {
 
       
       COALESCE(SUM(don_thuong), 0) as total_don_thuong,
+
+      COALESCE(SUM(don_giaohang15), 0) as total_don_giaohang15,
+      COALESCE(SUM(don_giaohang20), 0) as total_don_giaohang20,
       COALESCE(SUM(tong_chuyen), 0) as total_tong_chuyen,
 
 COALESCE(CAST(SUM(tong_diem) AS DOUBLE), 0.0) AS total_tong_diem,
@@ -1322,5 +1325,33 @@ COALESCE(SUM(SUBSTR(REPLACE(thoigian_hd, ' giờ ', '.'), 1, INSTR(REPLACE(thoig
   }
 
 
+  Future<void> addNewColumns() async {
+    try {
+      // Mở kết nối tới cơ sở dữ liệu
+      Database database = await initDatabase();
+
+      // Thêm cột mới nếu chưa tồn tại
+      await _addColumn(database, 'don_giaohang15', 'INTEGER');
+      await _addColumn(database, 'don_giaohang20', 'INTEGER');
+
+      // Đóng kết nối tới cơ sở dữ liệu
+      await database.close();
+    } catch (e) {
+      print('Lỗi khi thêm cột mới: $e');
+    }
+  }
+
+  // Hàm này được dùng để thêm cột mới
+  Future<void> _addColumn(Database db, String columnName, String columnType) async {
+    await db.execute('ALTER TABLE yatosm ADD COLUMN $columnName $columnType');
+  }
+
+  Future<void> deleteDataByDate(String tableName, String date) async {
+    // Mở kết nối đến cơ sở dữ liệu
+    Database db = await database;
+
+    // Thực hiện xóa dữ liệu dựa trên ngày trong bảng được chỉ định
+    await db.delete(tableName, where: 'ngay = ?', whereArgs: [date]);
+  }
 }
 

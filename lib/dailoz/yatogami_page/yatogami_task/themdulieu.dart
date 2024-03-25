@@ -36,6 +36,10 @@ class _DailozAddTaskState extends State<themdulieu> {
   int caoDiemSang = 0;
   int caoDiemToi = 0;
   int donThuong = 0;
+  int dongiaohng15 = 0;
+  int dongiaohng20 = 0;
+
+
   int  thunhap = 0;
   int  soGioHoatDong = 0;
   int soLanSacPin = 0;
@@ -73,6 +77,7 @@ class _DailozAddTaskState extends State<themdulieu> {
       caDangKiAdmin = result['ca_dangkiadmin'] ?? "";
       khuvuc = result['khuvuc'] ?? "";
     });
+
   }
 
 
@@ -82,17 +87,12 @@ class _DailozAddTaskState extends State<themdulieu> {
   void _calculateTotalScore() {
     TimeOfDay thoiGian = TimeOfDay(hour: gio, minute: phut);
      chuoiThoiGian = "${thoiGian.hour}.${thoiGian.minute}";
-
-
-
-
-
     setState(() {
       if (pickedDate.weekday == 6 || pickedDate.weekday == 7) {
-        tongDiem = caoDiemSang * 1.5 + caoDiemToi * 2 + donThuong;
+        tongDiem = caoDiemSang * 1.5 + caoDiemToi * 2 + donThuong + dongiaohng15 * 1.5 + dongiaohng20 * 2;
 
       } else {
-        tongDiem = (caoDiemSang.toDouble() * 2) + caoDiemToi * 2 + donThuong +0.0;
+        tongDiem = (caoDiemSang.toDouble() * 2) + caoDiemToi * 2 + donThuong +  dongiaohng15 * 1.5 + dongiaohng20 * 2 + 0.0;
 
 
       }
@@ -178,7 +178,7 @@ class _DailozAddTaskState extends State<themdulieu> {
 
 
 
-    tongDiemsm = caoDiemSang + caoDiemToi + donThuong;
+    tongDiemsm = caoDiemSang + caoDiemToi + donThuong + dongiaohng15 + dongiaohng20;
     if (caDangKiAdmin == '5h' && tiLeHoanThanhChuyen.toInt() >= 90 && tiLeNhanChuyen.toInt() >= 90 && chuoiThoiGian.toDouble() >= 5.0 ) {
       if (tongDiemsm >= h5hvuotmoc1) {
         thuongVuotMoc = (h5hvuotmoc1 - h8hvuotmoc2 + 1) * h5hvuotmoc3 + (tongDiemsm - h5hvuotmoc1) * h5hvuotmoc4;
@@ -209,6 +209,52 @@ class _DailozAddTaskState extends State<themdulieu> {
 
   }
 
+  Future<void> insertData() async {
+    Map<String, dynamic> data = {
+      'thu': DateFormat('EEEE', 'vi_VN').format(pickedDate),
+      'ngay': DateFormat('yyyy-MM-dd').format(pickedDate),
+      'cd_sang': caoDiemSang,
+      'cd_toi': caoDiemToi,
+      'don_thuong': donThuong,
+      'don_giaohang15': dongiaohng15,
+      'don_giaohang20': dongiaohng20,
+
+
+      'tong_chuyen': caoDiemSang + caoDiemToi + donThuong + dongiaohng15+dongiaohng20,
+      'tong_diem': tongDiem.toDouble(),
+      'doanh_thungay': "${NumberFormat("#,##0", "vi_VN").format(thunhap)}",
+      'vuot_chuyen': thuongVuotMoc > 0
+          ? '${NumberFormat("#,##0", "vi_VN").format(thuongVuotMoc)}'
+          : '',
+      'db_thunhap': _calculateGuaranteedIncome(),
+      'diem_tuan': caoDiemToi,
+      'du_gio': caDangKiAdmin == '5h' && chuoiThoiGian.toDouble() >= 5.0 ||
+          caDangKiAdmin == '8h' && chuoiThoiGian.toDouble() >= 8.0 ||
+          caDangKiAdmin == '10h' && chuoiThoiGian.toDouble() >= 10.0
+          ? 'Đã đủ'
+          : 'Chưa đủ ',
+      'ca_dangki': caDangKiAdmin,
+      'gio_themdulieu': DateFormat('EEEE, dd/MM/yyyy', 'vi_VN').format(
+          pickedDate),
+      'thoigian_hd': gio.toString()+" giờ "+phut.toString()+" phút",
+      'solansac_pin': soLanSacPin,
+      'thoigian_sac': caoDiemToi,
+      'tilenhanchuyen': '$tiLeNhanChuyen',
+      'tilehuychuyen': '$tiLeNhanChuyen',
+      'tilehoanthanhchuyen': '$tiLeHoanThanhChuyen',
+      'yatagami7': caoDiemToi,
+      'yatagami8': caoDiemToi,
+      'yatagami9': caoDiemToi,
+      'yatagami10': caoDiemToi,
+      'yatagami11': caoDiemToi,
+      'yatagami12': caoDiemToi,
+      'yatagami13': caoDiemToi,
+      'yatagami14': caoDiemToi,
+      'yatagami15': caoDiemToi,
+      'yatagami16': caoDiemToi,
+    };
+  }
+
 
   void saveData() async {
     // Create a DatabaseHelper instance
@@ -222,11 +268,7 @@ class _DailozAddTaskState extends State<themdulieu> {
 
     if (dataExists) {
       // Hiển thị thông báo hoặc thực hiện xử lý phù hợp khi dữ liệu đã tồn tại
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Dữ liệu cho ngày đã chọn đã tồn tại.'),
-        ),
-      );
+      _themdulieu1(context);
     } else {
       // Nếu chưa có dữ liệu, thực hiện thêm mới
 
@@ -236,7 +278,9 @@ class _DailozAddTaskState extends State<themdulieu> {
         'cd_sang': caoDiemSang,
         'cd_toi': caoDiemToi,
         'don_thuong': donThuong,
-        'tong_chuyen': caoDiemSang + caoDiemToi + donThuong,
+        'don_giaohang15': dongiaohng15,
+        'don_giaohang20': dongiaohng20,
+        'tong_chuyen': caoDiemSang + caoDiemToi + donThuong + dongiaohng15+dongiaohng20,
         'tong_diem': tongDiem.toDouble(),
         'doanh_thungay': "${NumberFormat("#,##0", "vi_VN").format(thunhap)}",
         'vuot_chuyen': thuongVuotMoc > 0
@@ -296,6 +340,95 @@ widget.initDataCallback();
 
     }
   }
+
+  void luudedulieu() async {
+    // Create a DatabaseHelper instance
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    NumberFormat currencyFormatter = NumberFormat("#,##000", "vi_VN");
+    // Prepare data to be inserted
+
+    bool dataExists = await databaseHelper.checkDataExists(
+        'yatosm', 'ngay', DateFormat('yyyy-MM-dd').format(pickedDate));
+
+
+    await databaseHelper.deleteDataByDate('yatosm', DateFormat('yyyy-MM-dd').format(pickedDate));
+
+      // Nếu chưa có dữ liệu, thực hiện thêm mới
+
+      Map<String, dynamic> data = {
+        'thu': DateFormat('EEEE', 'vi_VN').format(pickedDate),
+        'ngay': DateFormat('yyyy-MM-dd').format(pickedDate),
+        'cd_sang': caoDiemSang,
+        'cd_toi': caoDiemToi,
+        'don_thuong': donThuong,
+        'don_giaohang15': dongiaohng15,
+        'don_giaohang20': dongiaohng20,
+        'tong_chuyen': caoDiemSang + caoDiemToi + donThuong + dongiaohng15+dongiaohng20,
+        'tong_diem': tongDiem.toDouble(),
+        'doanh_thungay': "${NumberFormat("#,##0", "vi_VN").format(thunhap)}",
+        'vuot_chuyen': thuongVuotMoc > 0
+            ? '${NumberFormat("#,##0", "vi_VN").format(thuongVuotMoc)}'
+            : '',
+        'db_thunhap': _calculateGuaranteedIncome(),
+        'diem_tuan': caoDiemToi,
+        'du_gio': caDangKiAdmin == '5h' && chuoiThoiGian.toDouble() >= 5.0 ||
+            caDangKiAdmin == '8h' && chuoiThoiGian.toDouble() >= 8.0 ||
+            caDangKiAdmin == '10h' && chuoiThoiGian.toDouble() >= 10.0
+            ? 'Đã đủ'
+            : 'Chưa đủ ',
+        'ca_dangki': caDangKiAdmin,
+        'gio_themdulieu': DateFormat('EEEE, dd/MM/yyyy', 'vi_VN').format(
+            pickedDate),
+        'thoigian_hd': gio.toString()+" giờ "+phut.toString()+" phút",
+        'solansac_pin': soLanSacPin,
+        'thoigian_sac': caoDiemToi,
+        'tilenhanchuyen': '$tiLeNhanChuyen',
+        'tilehuychuyen': '$tiLeNhanChuyen',
+        'tilehoanthanhchuyen': '$tiLeHoanThanhChuyen',
+        'yatagami7': caoDiemToi,
+        'yatagami8': caoDiemToi,
+        'yatagami9': caoDiemToi,
+        'yatagami10': caoDiemToi,
+        'yatagami11': caoDiemToi,
+        'yatagami12': caoDiemToi,
+        'yatagami13': caoDiemToi,
+        'yatagami14': caoDiemToi,
+        'yatagami15': caoDiemToi,
+        'yatagami16': caoDiemToi,
+      };
+
+      // Insert data into the 'yatosm' table
+      await databaseHelper.insert('yatosm', data);
+
+      // Optionally, you can show a snackbar or navigate to another screen after saving
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Dữ liệu đã được cập nhập.'),
+
+
+
+
+        ),
+      );
+
+
+      Future.delayed(Duration(seconds: 0), () {
+
+
+        widget.initDataCallback();
+        Navigator.of(context).pop(); // Go back to the previous screen
+
+      });
+
+
+
+  }
+
+
+
+
+
+
   String formatHoursAndMinutes(double hours) {
     int intHours = hours.toInt();
     int minutes = ((hours - intHours) * 60).toInt();
@@ -415,7 +548,7 @@ widget.initDataCallback();
             ),
           ),
         ),
-        title:  Text("yatogami0".tr,style: hsSemiBold.copyWith(fontSize: 18),),
+        title:  Text("yatogami0".tr  ,style: hsSemiBold.copyWith(fontSize: 18),),
       ),
 
 
@@ -448,7 +581,7 @@ widget.initDataCallback();
                           onTap: () {
                             calendar();
                             _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
-
+                            _thuongvuotmoc();
                           },
                           child: Image.asset(DailozPngimage.calendar,height: height/36,color: DailozColor.textgray)),
                     ),
@@ -467,6 +600,7 @@ widget.initDataCallback();
             onSelectedItemChanged: (int index) {
               setState(() {
                 caoDiemSang = index;
+                _thuongvuotmoc();
                 _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
               });
             },
@@ -495,6 +629,7 @@ widget.initDataCallback();
 
                   setState(() {
                     caoDiemToi = index;
+                    _thuongvuotmoc();
                     _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
                   });
 
@@ -523,6 +658,7 @@ widget.initDataCallback();
 
                   setState(() {
                     donThuong = index ;
+                    _thuongvuotmoc();
                     _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
                   });
                   // Xử lý khi giá trị được chọn thay đổi
@@ -540,6 +676,123 @@ widget.initDataCallback();
                   );
                 }),
               ),
+
+
+
+// giao hàng
+              SizedBox(height: height/36,),
+              Row(
+                children: [
+                  SizedBox(
+
+                    width: width/2.2,
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: height/72),
+
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text("Giao Hàng (9h - 12h)".tr, style: hsSemiBold.copyWith(fontSize: 14, color: DailozColor.tenka)),
+                          ),
+                          CupertinoPicker(
+                            itemExtent: 32.0,
+                            onSelectedItemChanged: (int index) {
+
+                              setState(() {
+
+                                dongiaohng15 = index ;
+                                _thuongvuotmoc();
+                                _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
+                              });
+                              // Xử lý khi giá trị được chọn thay đổi
+                              // Ở đây, bạn có thể cập nhật giá trị hoặc thực hiện các tác vụ khác cần thiết
+                            },
+                            children: List.generate(20, (index) {
+                              return Center(
+                                child: Text(
+                                  '${index} Đơn',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: themedata.isdark ? DailozColor.white : DailozColor.black,
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const Spacer(),
+
+                  SizedBox(
+                    width: width/2.2,
+                    child: InkWell(
+                      splashColor: DailozColor.transparent,
+                      highlightColor: DailozColor.transparent,
+                      onTap: () {
+
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: height/72),
+
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text("Giao Hàng (các giờ khác)".tr, style: hsSemiBold.copyWith(fontSize: 14, color: DailozColor.tenka)),
+                          ),
+                          CupertinoPicker(
+                            itemExtent: 32.0,
+                            onSelectedItemChanged: (int index) {
+
+                              setState(() {
+                                dongiaohng20 = index ;
+                                _thuongvuotmoc();
+                                _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
+                              });
+                              // Xử lý khi giá trị được chọn thay đổi
+                              // Ở đây, bạn có thể cập nhật giá trị hoặc thực hiện các tác vụ khác cần thiết
+                            },
+                            children: List.generate(20, (index) {
+                              return Center(
+                                child: Text(
+                                  '${index} Đơn',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: themedata.isdark ? DailozColor.white : DailozColor.black,
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -595,6 +848,7 @@ widget.initDataCallback();
 
                                     setState(() {
                                       phut = index + 1;
+                                      _thuongvuotmoc();
                                       _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
                                     });
 
@@ -697,6 +951,7 @@ widget.initDataCallback();
                             onSelectedItemChanged: (int index) {
                               setState(() {
                                 tiLeNhanChuyen = index + 1;
+                                _thuongvuotmoc();
                                 _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
                               });
                               // Xử lý khi giá trị được chọn thay đổi
@@ -746,6 +1001,7 @@ widget.initDataCallback();
                             onSelectedItemChanged: (int index) {
                               setState(() {
                                 tiLeHoanThanhChuyen = index + 1;
+                                _thuongvuotmoc();
                                 _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
                               });
                               // Xử lý khi giá trị được chọn thay đổi
@@ -961,28 +1217,17 @@ widget.initDataCallback();
   }
 
   Future<bool> calendar() async {
-
-
-
-
     print('Height: $height, Width: $width');
-
     return await showDialog(
-
         builder: (context) => AlertDialog(
-
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             Column(
               children: [
                 TableCalendar(
-
-
                   locale: 'vi_VN', // Sử dụng định dạng ngôn ngữ Tiếng Việt
-
                   firstDay: DateTime.now().subtract(Duration(days: 30)),
-
                   focusedDay: DateTime.now(),
                   lastDay: DateTime.utc(2050, 3, 14),
                   headerVisible: true,
@@ -1007,7 +1252,6 @@ widget.initDataCallback();
                   currentDay: _selectedDay,
                   calendarFormat: CalendarFormat.month,
                   pageAnimationEnabled: false,
-
                   headerStyle: HeaderStyle(
                       leftChevronIcon: SizedBox(
                         height: height / 26,
@@ -1042,14 +1286,8 @@ widget.initDataCallback();
                       print('Selected Day: $_selectedDay');
                       dateController.text = DateFormat('EEEE, dd/MM/yyyy', 'vi_VN').format(selectedDay);
                       Navigator.pop(context);
-
                       _calculateTotalScore(); // Bạn có thể sử dụng selectedValue ở đây hoặc bất kỳ nơi nào cần thiết
-
                       pickedDate = selectedDay;
-
-
-
-
                       /*  String convertdate = FormatedDate(_selectedDay.toString());
                       selectdate = convertdate;*/
                       // Navigator.pop(context);
@@ -1303,7 +1541,85 @@ widget.initDataCallback();
   }
 
 
+  Future<void> _themdulieu1(BuildContext context) async {
 
+
+    return await showDialog(
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width/56,vertical: height/96),
+              child: Column(
+                children: [
+                  Text("Thông Báo".tr,style: hsSemiBold.copyWith(fontSize: 22)),
+
+
+
+
+
+
+                  SizedBox(height: height/36,),
+                  Text("Dữ liệu ngày này đã tồn tại bạn có muốn thay thế dữ liệu cũ không ?".tr,textAlign: TextAlign.center,maxLines: 2,overflow: TextOverflow.ellipsis,style: hsRegular.copyWith(fontSize: 16)),
+                  SizedBox(height: height/36,),
+
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          splashColor: DailozColor.transparent,
+                          highlightColor: DailozColor.transparent,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: height/20,
+                            width: width/4,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(color: DailozColor.appcolor)
+                            ),
+                            child: Center(child: Text("Cancel".tr,style: hsRegular.copyWith(fontSize: 14,color: DailozColor.appcolor),)),
+                          ),
+                        ),
+                        SizedBox(width: width/36,),
+                        Container(
+                          height: height / 20,
+                          width: width / 4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: DailozColor.appcolor,
+                          ),
+                          child: TextButton(
+                            onPressed: () async {
+                              luudedulieu();
+
+                              // Đóng dialog
+                              Navigator.of(context).pop();
+
+                            },
+                            child: Center(
+                              child: Text(
+                                "Đồng Ý".tr,
+                                style: hsRegular.copyWith(fontSize: 14, color: DailozColor.white),
+                              ),
+                            ),
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: height/56,),
+                ],
+              ),
+            )
+          ],
+        ),
+        context: context);
+  }
 
 
 

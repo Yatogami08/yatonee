@@ -797,6 +797,68 @@ class _DailozTaskState extends State<xanhsmxinchao> {
 
                 SizedBox(height: height/36,),
 
+
+
+                SizedBox(
+                  height: height/21,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(2, (index) {
+                      String labelText = "";
+                      Color labelColor = Colors.black;
+                      Color textColor = Colors.black;
+
+                      switch(index) {
+                        case 0:
+                          labelText = "Giao Hàng 1.5 : "+ (dataForSelectedWeek?['total_don_giaohang15'] ?? '').toString();
+                          labelColor = DailozColor.lightblue;
+                          textColor = DailozColor.tim;
+                          break;
+                        case 1:
+                          labelText = "Giao Hàng 2.0 : "+ (dataForSelectedWeek?['total_don_giaohang20'] ?? '').toString();
+
+
+
+                          labelColor = DailozColor.lightred;
+                          textColor = DailozColor.tim;
+
+                          break;
+                        case 2:
+                          labelText = "Mục 3";
+                          labelColor = const Color(0xffFFE9ED);
+                          textColor = DailozColor.lightred;
+                          break;
+                        case 3:
+                          labelText = "Mục 4";
+                          labelColor = DailozColor.bgsky;
+                          textColor = DailozColor.textblue;
+                          break;
+                        default:
+                          break;
+                      }
+
+                      return Container(
+                        margin: EdgeInsets.only(right: width/36),
+                        height: height/22,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: labelColor,
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: width/20),
+                            child: Text(labelText, style: hsRegular.copyWith(fontSize: 14, color: textColor)),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+
+                SizedBox(height: height/36,),
+
+
+
                 SizedBox(
                   height: height/21,
                   child: Row(
@@ -811,14 +873,15 @@ class _DailozTaskState extends State<xanhsmxinchao> {
                           double averageTileHoanThanhChuyen = (dataForSelectedWeek?['average_tilehoanthanhchuyen'] ?? 0).toDouble();
                           String formattedAverageTileHoanThanhChuyen = averageTileHoanThanhChuyen.toStringAsFixed(1); // Làm tròn giá trị đến 1 chữ số sau dấu chấm
                           labelText = "Tỉ lệ Hoàn Thành : $formattedAverageTileHoanThanhChuyen%";
-                          labelColor = DailozColor.lightblue;
+                          labelColor = DailozColor.lightred;
                           textColor = DailozColor.tim;
                           break;
                         case 1:
                           double averageTileHoanThanhChuyen = (dataForSelectedWeek?['average_tilenhanchuyen'] ?? 0).toDouble();
                           String formattedAverageTileHoanThanhChuyen = averageTileHoanThanhChuyen.toStringAsFixed(1); // Làm tròn giá trị đến 1 chữ số sau dấu chấm
                           labelText = "Tỉ lệ Nhận chuyến : $formattedAverageTileHoanThanhChuyen%";
-                          labelColor = DailozColor.lightred;
+
+                          labelColor = DailozColor.lightblue;
                           textColor = DailozColor.tim;
                           break;
                         case 2:
