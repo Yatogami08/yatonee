@@ -1335,7 +1335,7 @@ COALESCE(SUM(SUBSTR(REPLACE(thoigian_hd, ' giờ ', '.'), 1, INSTR(REPLACE(thoig
       await _addColumn(database, 'don_giaohang20', 'INTEGER');
 
       // Đóng kết nối tới cơ sở dữ liệu
-      await database.close();
+     
     } catch (e) {
       print('Lỗi khi thêm cột mới: $e');
     }
